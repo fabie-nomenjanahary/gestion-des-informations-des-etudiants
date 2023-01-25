@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { AnneeScolaireRoutingModule } from './annee-scolaire-routing.module';
 import { AnneeScolaireDialogComponent } from './components/annee-scolaire-dialog/annee-scolaire-dialog.component';
 import { AnneeScolaireListComponent } from './components/annee-scolaire-list/annee-scolaire-list.component';
-import { AngularMaterialUiModule } from '../angular-material-ui/angular-material-ui.module';
+import { CustomModule } from '../custom-module/custom-module.module';
 
 @NgModule({
   declarations: [
@@ -15,7 +15,8 @@ import { AngularMaterialUiModule } from '../angular-material-ui/angular-material
   imports: [
     CommonModule,
     AnneeScolaireRoutingModule,
-    AngularMaterialUiModule
+    CustomModule,
+
   ],
   exports: [
   

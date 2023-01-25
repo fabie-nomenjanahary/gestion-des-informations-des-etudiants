@@ -33,12 +33,15 @@ import { MatTabsModule } from '@angular/material/tabs';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatIconModule,
     MatAutocompleteModule,
     MatBadgeModule,
@@ -74,6 +77,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   ],
   exports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatIconModule,
     MatAutocompleteModule,
     MatBadgeModule,
@@ -108,4 +113,4 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatTooltipModule
   ],
 })
-export class AngularMaterialUiModule { }
+export class CustomModule { }

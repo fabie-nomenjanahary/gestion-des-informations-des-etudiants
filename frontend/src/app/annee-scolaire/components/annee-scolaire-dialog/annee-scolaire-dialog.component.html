@@ -1,1 +1,24 @@
-<p>annee-scolaire-dialog works!</p>
+<h1 mat-dialog-title>Formulaire d'ajout d'étudiant</h1>
+<div mat-dialog-content>
+    <form class="example-form" [formGroup]="ASForm">
+        <mat-form-field appearance="fill">
+            <mat-label>Année scolaire</mat-label>
+            <input formControlName="annee" matInput placeholder="Ex:2011-2012">
+            <mat-icon matPrefix>date_range</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Début et Fin de l'année scolaire</mat-label>
+            <mat-date-range-input [rangePicker]="picker">
+                <input formControlName="debutAS" matStartDate placeholder="Début">
+                <input formControlName="finAS" matEndDate placeholder="Fin">
+            </mat-date-range-input>
+            <mat-hint>JJ/MM/AAAA – JJ/MM/AAAA</mat-hint>
+            <mat-datepicker-toggle matIconPrefix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions align="center">
+    <button mat-raised-button color="primary" cdkFocusInitial (click)="addAnneeScolaire()">Enregistrer</button>
+    <button mat-raised-button color="accent" mat-dialog-close>Annuler</button>
+</div>
