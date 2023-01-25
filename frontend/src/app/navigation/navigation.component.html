@@ -1,0 +1,41 @@
+<mat-toolbar color="secondary">
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <nav class="navbar navbar-expand-sm navbar-dark">
+        <!-- Brand/logo -->
+        <mat-icon>school</mat-icon>
+        <a class="navbar-brand" href="#">&nbsp;Projet M1</a>
+
+        <!-- Links -->
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a routerLink="/etudiants/list" class="nav-link">
+                    <span>Etudiants</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/enseignants/list">
+                    <span>Enseignants</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/notes/list">
+                    <span>Notes</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/annee-scolaires/list">
+                    <span>Années scolaires</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <span class="example-spacer"></span>
+    <button mat-icon-button class="example-icon" aria-label="">
+        <mat-icon>account_circle</mat-icon>
+    </button>
+    <button mat-icon-button class="example-icon" aria-label="">
+        <mat-icon>notifications</mat-icon>
+    </button>
+</mat-toolbar>

@@ -14,6 +14,11 @@ import { AnneeScolaireListComponent } from './components/annee-scolaire-list/ann
   imports: [
     CommonModule,
     AnneeScolaireRoutingModule
-  ]
+  ],
+  exports: [
+  
+    AnneeScolaireDialogComponent,
+       AnneeScolaireListComponent
+  ],
 })
 export class AnneeScolaireModule { }
