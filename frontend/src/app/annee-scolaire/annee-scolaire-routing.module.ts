@@ -4,11 +4,11 @@ import { AnneeScolaireDialogComponent } from './components/annee-scolaire-dialog
 import { AnneeScolaireListComponent } from './components/annee-scolaire-list/annee-scolaire-list.component';
 
 const routes: Routes = [
-  { path: 'personnes', redirectTo: 'personnes/list', pathMatch: 'full' },
-  { path: 'personnes/list', component: AnneeScolaireListComponent },
-  {path:'personnes/create',component:AnneeScolaireDialogComponent},
-  { path: 'personnes/edit/:id', component: AnneeScolaireDialogComponent },
-  {path:'personnes/details/:id',component:AnneeScolaireDialogComponent},
+  { path: 'annee-scolaires', redirectTo: 'annee-scolaires/list', pathMatch: 'full' },
+  { path: 'annee-scolaires/list', component: AnneeScolaireListComponent },
+  {path:'annee-scolaires/create',component:AnneeScolaireDialogComponent},
+  { path: 'annee-scolaires/edit/:id', component: AnneeScolaireDialogComponent },
+  {path:'annee-scolaires/details/:id',component:AnneeScolaireDialogComponent},
 ];
 
 @NgModule({
