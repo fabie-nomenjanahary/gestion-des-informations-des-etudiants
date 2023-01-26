@@ -20,7 +20,7 @@ class AnneeScolaireController extends Controller
         $data['annee'] = $request['annee'];
         $data['debutAS'] = $request['debutAS'];
         $data['finAS'] = $request['finAS'];
-
+        dd($data);
         AnneeScolaire::create($data);
 
         return response()->json([

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { AnneeScolaire } from './annee-scolaire.model';
-const anneeScolaireURL = 'http://localhost:8080/api/annee-scolaires/';
+const anneeScolaireURL = 'http://localhost:8000/api/annee-scolaires/';
 
 @Injectable({
   providedIn: 'root'

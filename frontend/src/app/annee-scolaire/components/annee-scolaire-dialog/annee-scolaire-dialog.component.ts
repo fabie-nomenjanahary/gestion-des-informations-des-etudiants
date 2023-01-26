@@ -61,8 +61,9 @@ export class AnneeScolaireDialogComponent implements OnInit{
       if (this.ASForm.value.annee) {
         AS.annee = this.ASForm.value.annee;
       }
-      AS.debutAS = this.ASForm.value.debutAS
-      AS.finAS = this.ASForm.value.finAS
+      //BUG
+      AS.debutAS = new Date(this.ASForm.value.debutAS['_d'])
+      AS.finAS = new Date(this.ASForm.value.finAS['_d'])
       console.log(AS)
       this.ASService.create(AS).subscribe(res => {
         console.log('success');

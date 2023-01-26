@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\AnneeScolaireController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +17,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::prefix('annee-scolaires')->group(function () {
+    Route::get('/', [AnneeScolaireController::class, 'getAll']);
+    Route::get('/{id}', [AnneeScolaireController::class, 'get']);
+    Route::post('/', [AnneeScolaireController::class, 'create']);
+    Route::put('/{id}', [AnneeScolaireController::class, 'update']);
+    Route::delete('/{id}', [AnneeScolaireController::class, 'delete']);
 });
