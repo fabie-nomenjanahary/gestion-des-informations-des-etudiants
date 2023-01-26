@@ -1,12 +1,15 @@
 import { Component,Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import {
   MAT_MOMENT_DATE_FORMATS,
   MomentDateAdapter,
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
 } from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import { Router } from '@angular/router';
 import 'moment/locale/fr';
+import { AnneeScolaire } from '../../annee-scolaire.model';
+import { AnneeScolaireService } from '../../annee-scolaire.service';
 
 @Component({
   selector: 'app-annee-scolaire-dialog',
@@ -31,8 +34,11 @@ import 'moment/locale/fr';
 export class AnneeScolaireDialogComponent implements OnInit{
   
   ASForm: FormGroup;
-
-  constructor(private fb: FormBuilder, private _adapter: DateAdapter<any>, @Inject(MAT_DATE_LOCALE) private _locale: string,) {
+  debutFC = new FormControl('', Validators.required);
+  finFC = new FormControl('', Validators.required);
+  constructor(private fb: FormBuilder, private _adapter: DateAdapter<any>, @Inject(MAT_DATE_LOCALE) private _locale: string,
+    public ASService:AnneeScolaireService,private router:Router
+  ) {
       this._locale = 'fr';
       this._adapter.setLocale(this._locale);
   }
@@ -44,8 +50,28 @@ export class AnneeScolaireDialogComponent implements OnInit{
       finAS:['',Validators.required]
     })
   }
+  get f() {
+    return this.ASForm.controls;
+  }
+  //, Validators.pattern('^[a-zA-ZÁáÀàÉéÈèÍíÌìÓóÒòÚúÙùÑñüÜ \-\']+'),, Validators.email,Validators.pattern("^[0-9]*$") 
   addAnneeScolaire() {
-    
+    console.log(this.ASForm.value)
+    if (this.ASForm.valid) {
+      let AS: AnneeScolaire = new AnneeScolaire();
+      if (this.ASForm.value.annee) {
+        AS.annee = this.ASForm.value.annee;
+      }
+      AS.debutAS = this.ASForm.value.debutAS
+      AS.finAS = this.ASForm.value.finAS
+      console.log(AS)
+      this.ASService.create(AS).subscribe(res => {
+        console.log('success');
+        this.router.navigateByUrl('annee-scolaires/list');
+      })
+      
+    } else {
+      console.log('invalid information')
+    }
   }
   
 }
