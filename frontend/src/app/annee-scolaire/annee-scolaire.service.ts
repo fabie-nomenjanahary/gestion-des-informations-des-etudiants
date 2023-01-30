@@ -9,7 +9,8 @@ const anneeScolaireURL = 'http://localhost:8000/api/annee-scolaires/';
 })
 export class AnneeScolaireService {
   httpOptions = {
-     headers: new HttpHeaders({
+    headers: new HttpHeaders({
+       'Accept':'application/json',
        'Content-Type': 'application/json'
      })
   }
@@ -40,7 +41,7 @@ export class AnneeScolaireService {
   }
 
   create(anneeScolaire: AnneeScolaire):Observable<AnneeScolaire> {
-    return this.http.post<AnneeScolaire>(anneeScolaireURL, JSON.stringify(anneeScolaire), this.httpOptions)
+    return this.http.post<AnneeScolaire>(anneeScolaireURL, JSON.stringify(anneeScolaire))
       .pipe(
       catchError(this.errorHandler)
     )

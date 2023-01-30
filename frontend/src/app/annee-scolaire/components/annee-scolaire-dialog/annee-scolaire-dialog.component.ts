@@ -7,6 +7,7 @@ import {
 } from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 import 'moment/locale/fr';
 import { AnneeScolaire } from '../../annee-scolaire.model';
 import { AnneeScolaireService } from '../../annee-scolaire.service';
@@ -62,9 +63,10 @@ export class AnneeScolaireDialogComponent implements OnInit{
         AS.annee = this.ASForm.value.annee;
       }
       //BUG
-      AS.debutAS = new Date(this.ASForm.value.debutAS['_d'])
-      AS.finAS = new Date(this.ASForm.value.finAS['_d'])
-      console.log(AS)
+      // AS.debutAS = new Date(this.ASForm.value.debutAS['_d'])
+      // AS.finAS = new Date(this.ASForm.value.finAS['_d'])
+      AS.debutAS = this.ASForm.value.debutAS.toDate();
+      AS.finAS = this.ASForm.value.finAS.toDate();
       this.ASService.create(AS).subscribe(res => {
         console.log('success');
         this.router.navigateByUrl('annee-scolaires/list');
