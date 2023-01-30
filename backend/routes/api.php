@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AnneeScolaireController;
 use App\Http\Controllers\API\EtudiantController;
+use App\Http\Controllers\API\NiveauController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,4 +35,12 @@ Route::prefix('etudiants')->group(function () {
     Route::post('/', [EtudiantController::class, 'create']);
     Route::put('/', [EtudiantController::class, 'update']);
     Route::delete('/', [EtudiantController::class, 'delete']);
+});
+
+Route::prefix('niveaux')->group(function () {
+    Route::get('/', [NiveauController::class, 'getAll']);
+    Route::get('/{id}', [NiveauController::class, 'get']);
+    Route::post('/', [NiveauController::class, 'create']);
+    Route::put('/', [NiveauController::class, 'update']);
+    Route::delete('/', [NiveauController::class, 'delete']);
 });
