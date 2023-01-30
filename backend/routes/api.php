@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\AnneeScolaireController;
 use App\Http\Controllers\API\EtudiantController;
 use App\Http\Controllers\API\NiveauController;
+use App\Http\Controllers\API\ParcourController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -43,4 +44,12 @@ Route::prefix('niveaux')->group(function () {
     Route::post('/', [NiveauController::class, 'create']);
     Route::put('/', [NiveauController::class, 'update']);
     Route::delete('/', [NiveauController::class, 'delete']);
+});
+
+Route::prefix('parcours')->group(function () {
+    Route::get('/', [ParcourController::class, 'getAll']);
+    Route::get('/{id}', [ParcourController::class, 'get']);
+    Route::post('/', [ParcourController::class, 'create']);
+    Route::put('/', [ParcourController::class, 'update']);
+    Route::delete('/', [ParcourController::class, 'delete']);
 });
