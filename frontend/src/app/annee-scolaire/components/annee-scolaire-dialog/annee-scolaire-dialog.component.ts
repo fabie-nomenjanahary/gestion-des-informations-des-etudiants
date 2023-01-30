@@ -51,9 +51,9 @@ export class AnneeScolaireDialogComponent implements OnInit{
       finAS:['',Validators.required]
     })
   }
-  get f() {
-    return this.ASForm.controls;
-  }
+  // get f() {
+  //   return this.ASForm.controls;
+  // }
   //, Validators.pattern('^[a-zA-ZÁáÀàÉéÈèÍíÌìÓóÒòÚúÙùÑñüÜ \-\']+'),, Validators.email,Validators.pattern("^[0-9]*$") 
   addAnneeScolaire() {
     console.log(this.ASForm.value)
@@ -62,7 +62,8 @@ export class AnneeScolaireDialogComponent implements OnInit{
       if (this.ASForm.value.annee) {
         AS.annee = this.ASForm.value.annee;
       }
-      //BUG
+      //BUG 
+      //TODO convert moment date
       // AS.debutAS = new Date(this.ASForm.value.debutAS['_d'])
       // AS.finAS = new Date(this.ASForm.value.finAS['_d'])
       AS.debutAS = this.ASForm.value.debutAS.toDate();

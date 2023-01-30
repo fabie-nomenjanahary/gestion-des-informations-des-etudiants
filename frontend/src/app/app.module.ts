@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { AnneeScolaireModule } from './annee-scolaire/annee-scolaire.module';
 import { NavigationComponent } from './navigation/navigation.component';
 import { CustomModule } from './custom-module/custom-module.module';
+import { EtudiantModule } from './etudiant/etudiant.module';
 
 @NgModule({
   declarations: [
@@ -17,8 +18,9 @@ import { CustomModule } from './custom-module/custom-module.module';
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
+    CustomModule,
     AnneeScolaireModule,
-    CustomModule
+    EtudiantModule
   ],
   providers: [],
   bootstrap: [AppComponent]

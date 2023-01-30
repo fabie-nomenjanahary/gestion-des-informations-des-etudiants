@@ -8,9 +8,8 @@ import { CustomModule } from '../custom-module/custom-module.module';
 
 @NgModule({
   declarations: [
-  
     AnneeScolaireDialogComponent,
-       AnneeScolaireListComponent
+    AnneeScolaireListComponent
   ],
   imports: [
     CommonModule,
@@ -19,9 +18,8 @@ import { CustomModule } from '../custom-module/custom-module.module';
 
   ],
   exports: [
-  
     AnneeScolaireDialogComponent,
-       AnneeScolaireListComponent
+    AnneeScolaireListComponent
   ],
 })
 export class AnneeScolaireModule { }

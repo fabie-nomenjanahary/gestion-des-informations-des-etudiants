@@ -18,6 +18,7 @@ class AnneeScolaireController extends Controller
     public function create(Request $request)
     {
         $data['annee'] = $request['annee'];
+        //todo convert to mysql date
         $data['debutAS'] = $request['debutAS'];
         $data['finAS'] = $request['finAS'];
         dd($data);
