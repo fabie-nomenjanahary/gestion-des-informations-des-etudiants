@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AnneeScolaireController;
+use App\Http\Controllers\API\EtudiantController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,4 +26,12 @@ Route::prefix('annee-scolaires')->group(function () {
     Route::post('/', [AnneeScolaireController::class, 'create']);
     Route::put('/{id}', [AnneeScolaireController::class, 'update']);
     Route::delete('/{id}', [AnneeScolaireController::class, 'delete']);
+});
+
+Route::prefix('etudiants')->group(function () {
+    Route::get('/', [EtudiantController::class, 'getAll']);
+    Route::get('/{id}', [EtudiantController::class, 'get']);
+    Route::post('/', [EtudiantController::class, 'create']);
+    Route::put('/', [EtudiantController::class, 'update']);
+    Route::delete('/', [EtudiantController::class, 'delete']);
 });

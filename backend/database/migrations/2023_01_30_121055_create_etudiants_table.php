@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAnneeScolaireTable extends Migration
+class CreateEtudiantsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateAnneeScolaireTable extends Migration
      */
     public function up()
     {
-        //
-        Schema::create('annee-scolaires', function (Blueprint $table) {
+        Schema::create('etudiants', function (Blueprint $table) {
             $table->id();
-            $table->string('annee')->nullable();
-            $table->date('debutAS');
-            $table->date('finAS');
+            $table->string('matricule')->unique();
+            $table->text('observation')->nullable();
             $table->timestamps();
         });
     }
@@ -30,8 +28,6 @@ class CreateAnneeScolaireTable extends Migration
      */
     public function down()
     {
-        //
-
-        Schema::dropIfExists('annee-scolaire');
+        Schema::dropIfExists('etudiants');
     }
 }
