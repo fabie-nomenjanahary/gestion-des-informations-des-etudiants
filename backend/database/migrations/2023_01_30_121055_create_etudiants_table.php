@@ -17,6 +17,14 @@ class CreateEtudiantsTable extends Migration
             $table->id();
             $table->string('matricule')->unique();
             $table->text('observation')->nullable();
+            $table->unsignedBigInteger('idPersonne');
+            $table->foreign('idPersonne')->references('id')->on('personnes');
+            $table->unsignedBigInteger('idParcour');
+            $table->foreign('idParcour')->references('id')->on('parcours');
+            $table->unsignedBigInteger('idNiveau');
+            $table->foreign('idNiveau')->references('id')->on('niveaux');
+            $table->unsignedBigInteger('idAS');
+            $table->foreign('idAS')->references('id')->on('annee-scolaires');
             $table->timestamps();
         });
     }

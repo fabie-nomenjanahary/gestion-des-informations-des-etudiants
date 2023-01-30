@@ -19,6 +19,10 @@ class EtudiantController extends Controller
     {
         $data['matricule'] = $request['matricule'];
         $data['observation'] = $request['observation'];
+        $data['idPersonne'] = $request['idPersonne'];
+        $data['idParcour'] = $request['idParcour'];
+        $data['idNiveau'] = $request['idNiveau'];
+        $data['idAS'] = $request['idAS'];
 
         Etudiant::create($data);
 
@@ -39,6 +43,10 @@ class EtudiantController extends Controller
     {
         $data['matricule'] = $request['matricule'];
         $data['observation'] = $request['observation'];
+        $data['idPersonne'] = $request['idPersonne'];
+        $data['idParcour'] = $request['idParcour'];
+        $data['idNiveau'] = $request['idNiveau'];
+        $data['idAS'] = $request['idAS'];
 
         Etudiant::find($id)->update($data);
 

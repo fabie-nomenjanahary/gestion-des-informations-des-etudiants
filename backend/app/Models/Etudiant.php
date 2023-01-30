@@ -13,6 +13,10 @@ class Etudiant extends Model
 
     protected $fillable = [
         'matricule',
-        'observation'
+        'observation',
+        'idPersonne',
+        'idParcour',
+        'idNiveau',
+        'idAS'
     ];
 }
