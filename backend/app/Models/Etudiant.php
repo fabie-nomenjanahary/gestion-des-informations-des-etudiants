@@ -14,9 +14,29 @@ class Etudiant extends Model
     protected $fillable = [
         'matricule',
         'observation',
-        'idPersonne',
-        'idParcour',
-        'idNiveau',
-        'idAS'
+        'personne_id',
+        'parcour_id',
+        'niveau_id',
+        'AS_id'
     ];
+
+    public function personne()
+    {
+        return $this->belongsTo('App\Models\Personne');
+    }
+
+    public function parcour()
+    {
+        return $this->belongsTo('App\Models\Parcour');
+    }
+
+    public function niveau()
+    {
+        return $this->belongsTo('App\Models\Niveau');
+    }
+
+    public function anneeScolaire()
+    {
+        return $this->belongsTo('App\Models\AnneeScolaire');
+    }
 }

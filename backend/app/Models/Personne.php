@@ -20,4 +20,8 @@ class Personne extends Model
         'tel',
         'mail'
     ];
+    public function etudiant()
+    {
+        return $this->hasOne('App\Models\Etudiant');
+    }
 }

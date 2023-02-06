@@ -17,12 +17,21 @@ class EtudiantController extends Controller
 
     public function create(Request $request)
     {
+        // Retrieve flight by name, or create it if it doesn't exist...
+        // $flight = App\Models\Flight::firstOrCreate(['name' => 'Flight 10']);
+
+        // Retrieve flight by name, or create it with the name, delayed, and arrival_time attributes...
+        // $flight = App\Models\Flight::firstOrCreate(
+        //     ['name' => 'Flight 10'],
+        //     ['delayed' => 1, 'arrival_time' => '11:30']
+        // );
+
         $data['matricule'] = $request['matricule'];
         $data['observation'] = $request['observation'];
-        $data['idPersonne'] = $request['idPersonne'];
-        $data['idParcour'] = $request['idParcour'];
-        $data['idNiveau'] = $request['idNiveau'];
-        $data['idAS'] = $request['idAS'];
+        $data['personne_id'] = $request['personne_id'];
+        $data['parcour_id'] = $request['parcour_id'];
+        $data['niveau_id'] = $request['niveau_id'];
+        $data['AS_id'] = $request['AS_id'];
 
         Etudiant::create($data);
 
@@ -43,10 +52,10 @@ class EtudiantController extends Controller
     {
         $data['matricule'] = $request['matricule'];
         $data['observation'] = $request['observation'];
-        $data['idPersonne'] = $request['idPersonne'];
-        $data['idParcour'] = $request['idParcour'];
-        $data['idNiveau'] = $request['idNiveau'];
-        $data['idAS'] = $request['idAS'];
+        $data['personne_id'] = $request['personne_id'];
+        $data['parcour_id'] = $request['parcour_id'];
+        $data['niveau_id'] = $request['niveau_id'];
+        $data['AS_id'] = $request['AS_id'];
 
         Etudiant::find($id)->update($data);
 
@@ -61,7 +70,7 @@ class EtudiantController extends Controller
         Etudiant::find($id)->delete();
 
         return response()->json([
-            'message' => 'Etudiany*t supprimé avec succès',
+            'message' => 'Etudiant supprimé avec succès',
             'success' => true
         ], 200);
     }

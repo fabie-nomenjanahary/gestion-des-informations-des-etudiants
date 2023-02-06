@@ -16,4 +16,9 @@ class AnneeScolaire extends Model
         'debutAS',
         'finAS'
     ];
+
+    public function etudiants()
+    {
+        return $this->hasMany('App\Models\Etudiant');
+    }
 }

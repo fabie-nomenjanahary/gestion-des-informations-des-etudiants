@@ -14,4 +14,9 @@ class Niveau extends Model
     protected $fillable = [
         'libelle'
     ];
+
+    public function etudiants()
+    {
+        return $this->hasMany('App\Models\Etudiant');
+    }
 }
