@@ -8,6 +8,9 @@ import { AnneeScolaireModule } from './annee-scolaire/annee-scolaire.module';
 import { NavigationComponent } from './navigation/navigation.component';
 import { CustomModule } from './custom-module/custom-module.module';
 import { EtudiantModule } from './etudiant/etudiant.module';
+import { NiveauModule } from './niveau/niveau.module';
+import { ParcourModule } from './parcour/parcour.module';
+import { PersonneModule } from './personne/personne.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,10 @@ import { EtudiantModule } from './etudiant/etudiant.module';
     HttpClientModule,
     CustomModule,
     AnneeScolaireModule,
-    EtudiantModule
+    EtudiantModule,
+    NiveauModule,
+    ParcourModule,
+    PersonneModule
   ],
   providers: [],
   bootstrap: [AppComponent]

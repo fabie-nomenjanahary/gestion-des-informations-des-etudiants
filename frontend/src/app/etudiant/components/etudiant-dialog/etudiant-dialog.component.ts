@@ -31,11 +31,13 @@ import 'moment/locale/fr';
   ],
 })
 export class EtudiantDialogComponent implements OnInit{
+
   etudiantForm: FormGroup;
   selectedParcour: string;
   selectedNiveau: string;
   // parcours: Parcour[];
   // niveaux: Niveau[];
+
   constructor(private _adapter: DateAdapter<any>, @Inject(MAT_DATE_LOCALE) private _locale: string,
     private fb: FormBuilder, private etudiantService: EtudiantService, private router: Router) {
       this._locale = 'fr';
@@ -48,6 +50,7 @@ export class EtudiantDialogComponent implements OnInit{
       nom:['',Validators.required],
       prenom:[''],
       dateNais:['',Validators.required],
+      lieuNais:['',Validators.required],
       idParcour:['',Validators.required],
       idNiveau:['',Validators.required],
       annee:[''],

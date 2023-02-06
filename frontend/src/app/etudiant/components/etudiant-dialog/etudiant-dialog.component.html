@@ -24,6 +24,11 @@
             <mat-datepicker #dp></mat-datepicker>
         </mat-form-field>
         <mat-form-field appearance="fill">
+            <mat-label>Lieu de naissance</mat-label>
+            <input formControlName="lieuNais" matInput placeholder="Ex:Fianarantsoa">
+            <mat-icon matPrefix>location</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
             <mat-label>Parcour</mat-label>
             <mat-icon matPrefix>class</mat-icon>
             <mat-select formControlName="idParcour" [(ngModel)]="selectedParcour" name="parcour">
