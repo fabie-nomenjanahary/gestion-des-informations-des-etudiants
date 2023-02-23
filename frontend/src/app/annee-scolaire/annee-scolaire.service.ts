@@ -41,7 +41,7 @@ export class AnneeScolaireService {
   }
 
   create(anneeScolaire: AnneeScolaire):Observable<AnneeScolaire> {
-    return this.http.post<AnneeScolaire>(anneeScolaireURL, JSON.stringify(anneeScolaire))
+    return this.http.post<AnneeScolaire>(anneeScolaireURL, JSON.stringify(anneeScolaire), this.httpOptions)
       .pipe(
       catchError(this.errorHandler)
     )

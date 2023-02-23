@@ -20,13 +20,11 @@ class PersonneController extends Controller
         $data['nom'] = $request['nom'];
         $data['prenom'] = $request['prenom'];
         $data['adresse'] = $request['adresse'];
-        //todo convert to mysql date
         $data['dateNais'] = $request['dateNais'];
         $data['lieuNais'] = $request['lieuNais'];
         $data['tel'] = $request['tel'];
         $data['mail'] = $request['mail'];
 
-        dd($data);
         Personne::create($data);
 
         return response()->json([
@@ -38,6 +36,17 @@ class PersonneController extends Controller
     public function get($id)
     {
         $data = Personne::find($id);
+
+        return response()->json($data, 200);
+    }
+
+    public function search($nom, $prenom, $mail)
+    {
+        $data = Personne::where([
+            ['nom', $nom],
+            ['prenom', $prenom],
+            ['mail', $mail]
+        ])->first();
 
         return response()->json($data, 200);
     }

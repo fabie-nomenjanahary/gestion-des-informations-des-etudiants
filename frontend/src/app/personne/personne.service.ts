@@ -62,4 +62,11 @@ export class PersonneService {
       catchError(this.errorHandler)
     )
   }
+
+    search(nom: string,prenom:string,mail:string): Observable<Personne>{
+    return this.http.get<Personne>(personneURL + nom+"/"+prenom+"/"+mail)
+      .pipe(
+      catchError(this.errorHandler)
+    )
+  }
 }

@@ -15,7 +15,7 @@ class CreateParcoursTable extends Migration
     {
         Schema::create('parcours', function (Blueprint $table) {
             $table->id();
-            $table->string('libelle');
+            $table->string('libelle')->unique();
             $table->timestamps();
         });
     }

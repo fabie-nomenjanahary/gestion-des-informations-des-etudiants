@@ -61,13 +61,16 @@ export class AnneeScolaireDialogComponent implements OnInit{
       let AS: AnneeScolaire = new AnneeScolaire();
       if (this.ASForm.value.annee) {
         AS.annee = this.ASForm.value.annee;
+      } else {
+        AS.annee = this.ASForm.value.debutAS.format('YYYY') + "-" + this.ASForm.value.finAS.format('YYYY');
       }
       //BUG 
       //TODO convert moment date
-      // AS.debutAS = new Date(this.ASForm.value.debutAS['_d'])
-      // AS.finAS = new Date(this.ASForm.value.finAS['_d'])
-      AS.debutAS = this.ASForm.value.debutAS.toDate();
-      AS.finAS = this.ASForm.value.finAS.toDate();
+      //2023-01-30 14:00:00
+      AS.debutAS = this.ASForm.value.debutAS.format('YYYY-MM-DD');
+      AS.finAS = this.ASForm.value.finAS.format('YYYY-MM-DD');
+      console.log(AS)
+      console.log(typeof(AS.finAS))
       this.ASService.create(AS).subscribe(res => {
         console.log('success');
         this.router.navigateByUrl('annee-scolaires/list');

@@ -15,9 +15,9 @@ export class NiveauListComponent {
   constructor(private niveauService: NiveauService, private etudiantDialog: MatDialog) { }
   
   ngOnInit(): void {
-    this.getNiveaus();
+    this.getNiveaux();
   }
-  getNiveaus() {
+  getNiveaux() {
     this.niveauService.getAll().subscribe((data: Niveau[]) => {
       this.niveaux = data;
       console.log(this.niveaux);

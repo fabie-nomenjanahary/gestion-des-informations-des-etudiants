@@ -31,27 +31,31 @@
         <mat-form-field appearance="fill">
             <mat-label>Parcour</mat-label>
             <mat-icon matPrefix>class</mat-icon>
-            <mat-select formControlName="idParcour" [(ngModel)]="selectedParcour" name="parcour">
-                <mat-option>
+            <mat-select formControlName="idParcour" [(ngModel)]="selectedParcour" name="idParcour">
+                <mat-option *ngFor="let parcour of parcours" [value]="parcour.id">
+                    {{parcour.libelle}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <!-- <p> Parcour choisi: {{selectedParcour}} </p> -->
         <mat-form-field appearance="fill">
             <mat-label>Niveau</mat-label>
             <mat-icon matPrefix>show_chart</mat-icon>
-            <mat-select formControlName="idNiveau" [(ngModel)]="selectedNiveau" name="niveau">
-                <mat-option>
+            <mat-select formControlName="idNiveau" [(ngModel)]="selectedNiveau" name="idNiveau">
+                <mat-option *ngFor="let niveau of niveaux" [value]="niveau.id">
+                    {{niveau.libelle}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <!-- <p> Niveau choisi: {{selectedNiveau}} </p> -->
         <mat-form-field appearance="fill">
             <mat-label>Année scolaire</mat-label>
-            <input formControlName="annee" matInput placeholder="Ex:2011-2012">
             <mat-icon matPrefix>date_range</mat-icon>
+            <mat-select formControlName="idAS" [(ngModel)]="selectedAS" name="idAS">
+                <mat-option *ngFor="let AS of anneeScolaires" [value]="AS.id">
+                    {{AS.annee}}
+                </mat-option>
+            </mat-select>
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <!-- <mat-form-field appearance="fill">
             <mat-label>Début et Fin de l'année scolaire</mat-label>
             <mat-date-range-input [rangePicker]="picker">
                 <input formControlName="debutAS" matStartDate placeholder="Début">
@@ -60,7 +64,7 @@
             <mat-hint>JJ/MM/AAAA – JJ/MM/AAAA</mat-hint>
             <mat-datepicker-toggle matIconPrefix [for]="picker"></mat-datepicker-toggle>
             <mat-date-range-picker #picker></mat-date-range-picker>
-        </mat-form-field>
+        </mat-form-field> -->
         <mat-form-field appearance="fill">
             <mat-label>Adresse</mat-label>
             <input formControlName="adresse" matInput placeholder="Ex:Fianarantsoa Lot.15UY-510">

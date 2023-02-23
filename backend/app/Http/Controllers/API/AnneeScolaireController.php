@@ -4,12 +4,15 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\AnneeScolaire;
+use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 
 class AnneeScolaireController extends Controller
 {
     public function getAll()
     {
+        // var_dump(new DateTime('2020-12-30'));
         $data = AnneeScolaire::get();
 
         return response()->json($data, 200);
@@ -18,10 +21,10 @@ class AnneeScolaireController extends Controller
     public function create(Request $request)
     {
         $data['annee'] = $request['annee'];
-        //todo convert to mysql date
         $data['debutAS'] = $request['debutAS'];
         $data['finAS'] = $request['finAS'];
-        dd($data);
+
+        // dd($data);
         AnneeScolaire::create($data);
 
         return response()->json([

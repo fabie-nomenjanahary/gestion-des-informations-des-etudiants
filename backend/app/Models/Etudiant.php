@@ -39,4 +39,15 @@ class Etudiant extends Model
     {
         return $this->belongsTo('App\Models\AnneeScolaire');
     }
+
+    public static function rules()
+    {
+        return [
+            'etudiant.matricule' => 'required|unique:etudiants,matricule',
+        ];
+    }
+    public static $messages = [
+        'etudiant.matricule.required' => 'Veuillez saisir le numéro matricule s\'il vous plait',
+        'etudiant.matricule.unique' => 'Ce numéro matricule existe dèjà'
+    ];
 }

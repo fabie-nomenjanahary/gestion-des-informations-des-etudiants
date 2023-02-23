@@ -20,8 +20,8 @@ class CreatePersonnesTable extends Migration
             $table->string('adresse');
             $table->date('dateNais');
             $table->string('lieuNais');
-            $table->string('tel');
-            $table->string('mail');
+            $table->string('tel')->unique();
+            $table->string('mail')->unique();
             $table->timestamps();
         });
     }

@@ -24,4 +24,19 @@ class Personne extends Model
     {
         return $this->hasOne('App\Models\Etudiant');
     }
+
+    public static function rules()
+    {
+        return [
+            'personne.tel' => 'required|unique:personnes,tel',
+            'personne.mail' => 'required|unique:personnes,mail',
+        ];
+    }
+
+    public static $messages = [
+        'personne.tel.required' => 'Veuillez saisir le numéro de téléphone s\'il vous plait',
+        'personne.tel.unique' => 'Ce numéro de téléphone existe déjà',
+        'personne.mail.required' => 'Veuillez saisir l\'adresse e-mail s\'il vous plait',
+        'personne.mail.unique' => 'Cet adresse e-mail existe déjà',
+    ];
 }

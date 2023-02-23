@@ -16,10 +16,13 @@ class CreateAnneeScolaireTable extends Migration
         //
         Schema::create('annee-scolaires', function (Blueprint $table) {
             $table->id();
-            $table->string('annee')->nullable();
+            $table->string('annee')->unique()->nullable();
             $table->date('debutAS');
             $table->date('finAS');
             $table->timestamps();
+
+
+            $table->unique(array('debutAS', 'finAS'));
         });
     }
 

@@ -10,6 +10,14 @@ import {
 } from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import 'moment/locale/fr';
+import { Parcour } from 'src/app/parcour/parcour.model';
+import { Niveau } from 'src/app/niveau/niveau.model';
+import { ParcourService } from 'src/app/parcour/parcour.service';
+import { NiveauService } from 'src/app/niveau/niveau.service';
+import { Personne } from 'src/app/personne/personne.model';
+import { AnneeScolaire } from 'src/app/annee-scolaire/annee-scolaire.model';
+import { AnneeScolaireService } from 'src/app/annee-scolaire/annee-scolaire.service';
+import { PersonneService } from 'src/app/personne/personne.service';
 @Component({
   selector: 'app-etudiant-dialog',
   templateUrl: './etudiant-dialog.component.html',
@@ -35,16 +43,25 @@ export class EtudiantDialogComponent implements OnInit{
   etudiantForm: FormGroup;
   selectedParcour: string;
   selectedNiveau: string;
-  // parcours: Parcour[];
-  // niveaux: Niveau[];
+  selectedAS: string;
+  parcours: Parcour[];
+  niveaux: Niveau[];
+  anneeScolaires: AnneeScolaire[];
 
   constructor(private _adapter: DateAdapter<any>, @Inject(MAT_DATE_LOCALE) private _locale: string,
-    private fb: FormBuilder, private etudiantService: EtudiantService, private router: Router) {
-      this._locale = 'fr';
-      this._adapter.setLocale(this._locale);
+    private fb: FormBuilder, private etudiantService: EtudiantService, private router: Router,
+    private parcourService: ParcourService, private niveauService: NiveauService,
+    private anneeScolaireService:AnneeScolaireService,private personneService:PersonneService
+  ) {
+    this._locale = 'fr';
+    this._adapter.setLocale(this._locale);
+    
      }
   
   ngOnInit(): void {
+    this.getParcours();
+    this.getNiveaux();
+    this.getAnneeScolaires();
     this.etudiantForm = this.fb.group({
       matricule: ['', Validators.required],
       nom:['',Validators.required],
@@ -53,26 +70,83 @@ export class EtudiantDialogComponent implements OnInit{
       lieuNais:['',Validators.required],
       idParcour:['',Validators.required],
       idNiveau:['',Validators.required],
-      annee:[''],
-      debutAS:['',Validators.required],
-      finAS:['',Validators.required],
+      idAS:['',Validators.required],
       adresse:['',Validators.required],
       tel: ['', Validators.required],
       mail:['',Validators.required],
       observation:['']
     })
   }
-
+ getParcours() {
+    this.parcourService.getAll().subscribe((data: Parcour[]) => {
+      this.parcours = data;
+      
+    })
+  }
+getNiveaux() {
+    this.niveauService.getAll().subscribe((data: Niveau[]) => {
+      this.niveaux = data;
+    })
+}
+    getAnneeScolaires() {
+     this.anneeScolaireService.getAll().subscribe((data: AnneeScolaire[]) => {
+      this.anneeScolaires = data;
+    })
+  }
   addEtudiant() {
-    console.log(this.etudiantForm.value);
+
+    
     if (this.etudiantForm.valid) {
+      
+      let personne: Personne = new Personne();
       let etudiant: Etudiant = new Etudiant();
+
+      personne.nom = this.etudiantForm.value.nom;
+      personne.prenom = this.etudiantForm.value.prenom;
+      personne.adresse = this.etudiantForm.value.adresse;
+      personne.dateNais = this.etudiantForm.value.dateNais.format('YYYY-MM-DD');
+      personne.lieuNais = this.etudiantForm.value.lieuNais;
+      personne.tel = this.etudiantForm.value.tel;
+      personne.mail = this.etudiantForm.value.mail;
+
       etudiant.matricule = this.etudiantForm.value.matricule;
       etudiant.observation = this.etudiantForm.value.observation;
-      this.etudiantService.create(etudiant).subscribe(res => {
-        console.log('success');
-        this.router.navigateByUrl('etudiants/list');
+      etudiant.parcour_id = Number(this.selectedParcour);
+      etudiant.niveau_id = Number(this.selectedNiveau);
+      etudiant.AS_id = Number(this.selectedAS);
+      this.etudiantService.search(personne, etudiant).subscribe(res => {
+        console.log(res)
       })
+      // this.personneService
+      //   .search(this.etudiantForm.value.nom, this.etudiantForm.value.prenom, this.etudiantForm.value.mail)
+      //   .subscribe(res => {
+      //     if (res.id) {
+      //       etudiant.personne_id = res.id;
+      //     } else {
+      //       personne.nom = this.etudiantForm.value.nom;
+      //       personne.prenom = this.etudiantForm.value.prenom;
+      //       personne.adresse = this.etudiantForm.value.adresse;
+      //       personne.dateNais = this.etudiantForm.value.dateNais.format('YYYY-MM-DD');
+      //       personne.lieuNais = this.etudiantForm.value.lieuNais;
+      //       personne.tel = this.etudiantForm.value.tel;
+      //       personne.mail = this.etudiantForm.value.mail;
+      //       this.personneService.create(personne).subscribe(res => {
+      //         //BUG
+      //         this.personneService.search(personne.nom, personne.prenom, personne.mail).subscribe(res => {
+      //           if (res.id) {
+      //             etudiant.personne_id = res.id;
+      //           } else {
+      //           }
+      //         })
+      //       })
+      //     }
+      //     console.log(etudiant);
+      //     this.etudiantService.create(etudiant).subscribe(res => {
+      //       console.log('success');
+      //       this.router.navigateByUrl('etudiants/list');
+      //     })
+
+      //   })
     } else {
       console.log('Invalid information');
     }

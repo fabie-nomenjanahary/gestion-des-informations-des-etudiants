@@ -4,7 +4,7 @@ export class Personne {
     prenom: string;
     adresse: string;
     dateNais: Date;
-    lieuNais: Date;
+    lieuNais: string;
     tel: string;
     mail: string;
 }

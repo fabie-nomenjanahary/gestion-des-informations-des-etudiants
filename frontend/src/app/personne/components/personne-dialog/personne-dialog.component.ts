@@ -60,7 +60,7 @@ export class PersonneDialogComponent implements OnInit{
       let personne: Personne = new Personne();
       personne.nom = this.personneForm.value.nom;
       personne.prenom = this.personneForm.value.prenom;
-      personne.dateNais = this.personneForm.value.dateNais;
+      personne.dateNais = this.personneForm.value.dateNais.format('YYYY-MM-DD');
       personne.lieuNais = this.personneForm.value.lieuNais;
       personne.adresse = this.personneForm.value.adresse;
       personne.tel = this.personneForm.value.tel;

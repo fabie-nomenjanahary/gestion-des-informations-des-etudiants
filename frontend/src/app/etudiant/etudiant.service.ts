@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Etudiant } from './etudiant.model';
 import { catchError, Observable, pipe, throwError } from 'rxjs';
+import { Personne } from '../personne/personne.model';
 
 const etudiantURL = 'http://localhost:8000/api/etudiants/';
 
@@ -59,6 +60,15 @@ export class EtudiantService {
   delete(id: number) {
     return this.http.delete<Etudiant>(etudiantURL + id, this.httpOptions)
     .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
+  /*extra methods*/
+  search(personne: Personne, etudiant: Etudiant) {
+    console.log(JSON.stringify({'personne':personne,'etudiant':etudiant}));
+    return this.http.post(etudiantURL, JSON.stringify({'personne':personne,'etudiant':etudiant}), this.httpOptions)
+      .pipe(
       catchError(this.errorHandler)
     )
   }

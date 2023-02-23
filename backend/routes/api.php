@@ -35,6 +35,7 @@ Route::prefix('etudiants')->group(function () {
     Route::get('/', [EtudiantController::class, 'getAll']);
     Route::get('/{id}', [EtudiantController::class, 'get']);
     Route::post('/', [EtudiantController::class, 'create']);
+    Route::post('/', [EtudiantController::class, 'search']);
     Route::put('/', [EtudiantController::class, 'update']);
     Route::delete('/', [EtudiantController::class, 'delete']);
 });
@@ -58,6 +59,7 @@ Route::prefix('parcours')->group(function () {
 Route::prefix('personnes')->group(function () {
     Route::get('/', [PersonneController::class, 'getAll']);
     Route::get('/{id}', [PersonneController::class, 'get']);
+    // Route::get('/{nom}/{prenom}/{mail}', [PersonneController::class, 'search']);
     Route::post('/', [PersonneController::class, 'create']);
     Route::put('/', [PersonneController::class, 'update']);
     Route::delete('/', [PersonneController::class, 'delete']);
