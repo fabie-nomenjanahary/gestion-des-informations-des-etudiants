@@ -19,4 +19,15 @@ class Niveau extends Model
     {
         return $this->hasMany('App\Models\Etudiant');
     }
+
+    public static function rules()
+    {
+        return [
+            'libelle' => 'unique:niveaux,libelle'
+        ];
+    }
+
+    public static $messages = [
+        'libelle.unique' => 'Ce niveau existe déjà'
+    ];
 }

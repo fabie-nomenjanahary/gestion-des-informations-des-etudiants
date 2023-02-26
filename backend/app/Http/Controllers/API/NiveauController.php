@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Niveau;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class NiveauController extends Controller
 {
@@ -19,12 +20,22 @@ class NiveauController extends Controller
     {
         $data['libelle'] = $request['libelle'];
 
-        Niveau::create($data);
 
-        return response()->json([
-            'message' => "Niveau ajouté avec succès",
-            'success' => true
-        ], 200);
+        $validator = Validator::make($data, Niveau::rules(), Niveau::$messages);
+
+        if ($validator->fails()) {
+            return response()->json(
+                ['error' => $validator->errors()]
+            );
+        } else {
+
+            Niveau::create($data);
+
+            return response()->json([
+                'message' => "Niveau ajouté avec succès",
+                'success' => true
+            ], 200);
+        }
     }
 
     public function get($id)

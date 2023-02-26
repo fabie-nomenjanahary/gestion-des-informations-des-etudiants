@@ -43,11 +43,13 @@ class Etudiant extends Model
     public static function rules()
     {
         return [
-            'etudiant.matricule' => 'required|unique:etudiants,matricule',
+            'matricule' => 'required|unique:etudiants,matricule',
+            'personne_id' => 'unique:etudiants,personne_id'
         ];
     }
     public static $messages = [
-        'etudiant.matricule.required' => 'Veuillez saisir le numéro matricule s\'il vous plait',
-        'etudiant.matricule.unique' => 'Ce numéro matricule existe dèjà'
+        'matricule.required' => 'Veuillez saisir le numéro matricule s\'il vous plait',
+        'matricule.unique' => 'Ce numéro matricule existe dèjà',
+        'personne_id.unique' => 'Cet étudiant est dèjà enregistré'
     ];
 }

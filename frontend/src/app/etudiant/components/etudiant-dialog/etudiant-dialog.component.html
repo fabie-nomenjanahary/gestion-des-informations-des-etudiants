@@ -1,34 +1,36 @@
 <h1 mat-dialog-title>Formulaire d'ajout d'étudiant</h1>
 <div mat-dialog-content>
     <form class="example-form" [formGroup]="etudiantForm">
-        <mat-form-field appearance="fill">
+        <hr>
+        <mat-form-field appearance="outline">
             <mat-label>N° Matricule</mat-label>
             <input formControlName="matricule" matInput placeholder="Ex:2365H-F">
             <mat-icon matPrefix>format_list_numbered</mat-icon>
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
             <mat-label>Nom</mat-label>
             <input formControlName="nom" matInput placeholder="Ex:Rabe">
             <mat-icon matPrefix>person</mat-icon>
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
             <mat-label>Prénom(s)</mat-label>
             <input formControlName="prenom" matInput placeholder="Ex:Jean Bruno">
             <mat-icon matPrefix>person_outline</mat-icon>
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
             <mat-label>Date de naissance</mat-label>
             <input formControlName="dateNais" matInput [matDatepicker]="dp">
             <mat-hint>JJ/MM/AAAA</mat-hint>
             <mat-datepicker-toggle matIconPrefix [for]="dp"></mat-datepicker-toggle>
             <mat-datepicker #dp></mat-datepicker>
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
             <mat-label>Lieu de naissance</mat-label>
             <input formControlName="lieuNais" matInput placeholder="Ex:Fianarantsoa">
-            <mat-icon matPrefix>location</mat-icon>
+            <!-- TODO : another location icon -->
+            <mat-icon matPrefix>location_on</mat-icon>
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
             <mat-label>Parcour</mat-label>
             <mat-icon matPrefix>class</mat-icon>
             <mat-select formControlName="idParcour" [(ngModel)]="selectedParcour" name="idParcour">
@@ -37,7 +39,7 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
             <mat-label>Niveau</mat-label>
             <mat-icon matPrefix>show_chart</mat-icon>
             <mat-select formControlName="idNiveau" [(ngModel)]="selectedNiveau" name="idNiveau">
@@ -46,7 +48,7 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
             <mat-label>Année scolaire</mat-label>
             <mat-icon matPrefix>date_range</mat-icon>
             <mat-select formControlName="idAS" [(ngModel)]="selectedAS" name="idAS">
@@ -55,32 +57,22 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <!-- <mat-form-field appearance="fill">
-            <mat-label>Début et Fin de l'année scolaire</mat-label>
-            <mat-date-range-input [rangePicker]="picker">
-                <input formControlName="debutAS" matStartDate placeholder="Début">
-                <input formControlName="finAS" matEndDate placeholder="Fin">
-            </mat-date-range-input>
-            <mat-hint>JJ/MM/AAAA – JJ/MM/AAAA</mat-hint>
-            <mat-datepicker-toggle matIconPrefix [for]="picker"></mat-datepicker-toggle>
-            <mat-date-range-picker #picker></mat-date-range-picker>
-        </mat-form-field> -->
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
             <mat-label>Adresse</mat-label>
             <input formControlName="adresse" matInput placeholder="Ex:Fianarantsoa Lot.15UY-510">
             <mat-icon matPrefix>location_on</mat-icon>
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
             <mat-label>N° Téléphone</mat-label>
             <input formControlName="tel" matInput placeholder="Ex:0340152624">
             <mat-icon matPrefix>phone</mat-icon>
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
             <mat-label>Adresse e-mail</mat-label>
             <input formControlName="mail" type="email" matInput placeholder="Ex:exemple@gmail.com">
             <mat-icon matPrefix>mail</mat-icon>
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field appearance="outline">
             <mat-label>Observation</mat-label>
             <textarea formControlName="observation" matInput placeholder="..."></textarea>
             <mat-icon matPrefix>assignment</mat-icon>
@@ -89,5 +81,5 @@
 </div>
 <div mat-dialog-actions align="center">
     <button mat-raised-button color="primary" cdkFocusInitial (click)="addEtudiant()">Enregistrer</button>
-    <button mat-raised-button color="accent" mat-dialog-close>Annuler</button>
+    <button mat-raised-button color="warn" mat-dialog-close>Annuler</button>
 </div>

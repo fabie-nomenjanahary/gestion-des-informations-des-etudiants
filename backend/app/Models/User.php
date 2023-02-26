@@ -37,4 +37,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function rules()
+    {
+        return [
+            'email' => 'unique:users,email'
+        ];
+    }
+
+    public static $messages = [
+        'email.unique' => 'Cet adresse e-mail est déjà utilisé par un autre compte'
+    ];
 }

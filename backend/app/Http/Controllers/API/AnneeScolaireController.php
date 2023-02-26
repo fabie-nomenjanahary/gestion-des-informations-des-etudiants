@@ -7,6 +7,7 @@ use App\Models\AnneeScolaire;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Validator;
 
 class AnneeScolaireController extends Controller
 {
@@ -24,13 +25,21 @@ class AnneeScolaireController extends Controller
         $data['debutAS'] = $request['debutAS'];
         $data['finAS'] = $request['finAS'];
 
-        // dd($data);
-        AnneeScolaire::create($data);
+        $validator = Validator::make($data, AnneeScolaire::rules(), AnneeScolaire::$messages);
 
-        return response()->json([
-            'message' => "Année scolaire ajoutée avec succès",
-            'success' => true
-        ], 200);
+        if ($validator->fails()) {
+            return response()->json([
+                'error' => $validator->errors()
+            ]);
+        } else {
+
+            AnneeScolaire::create($data);
+
+            return response()->json([
+                'message' => "Année scolaire ajoutée avec succès",
+                'success' => true
+            ], 200);
+        }
     }
 
     public function get($id)

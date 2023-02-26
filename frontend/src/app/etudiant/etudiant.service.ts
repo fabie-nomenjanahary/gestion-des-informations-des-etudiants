@@ -43,8 +43,9 @@ export class EtudiantService {
     )
   }
 
-  create(etudiant: Etudiant): Observable<Etudiant>{
-    return this.http.post<Etudiant>(etudiantURL, JSON.stringify(etudiant), this.httpOptions)
+  create(personne: Personne, etudiant: Etudiant) {
+    // console.log(JSON.stringify({'personne':personne,'etudiant':etudiant}));
+    return this.http.post(etudiantURL, JSON.stringify({'personne':personne,'etudiant':etudiant}), this.httpOptions)
       .pipe(
       catchError(this.errorHandler)
     )
@@ -60,15 +61,6 @@ export class EtudiantService {
   delete(id: number) {
     return this.http.delete<Etudiant>(etudiantURL + id, this.httpOptions)
     .pipe(
-      catchError(this.errorHandler)
-    )
-  }
-
-  /*extra methods*/
-  search(personne: Personne, etudiant: Etudiant) {
-    console.log(JSON.stringify({'personne':personne,'etudiant':etudiant}));
-    return this.http.post(etudiantURL, JSON.stringify({'personne':personne,'etudiant':etudiant}), this.httpOptions)
-      .pipe(
       catchError(this.errorHandler)
     )
   }

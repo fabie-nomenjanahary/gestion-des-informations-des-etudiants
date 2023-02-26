@@ -19,72 +19,88 @@ class EtudiantController extends Controller
 
     public function create(Request $request)
     {
-        // Retrieve flight by name, or create it if it doesn't exist...
-        // $flight = App\Models\Flight::firstOrCreate(['name' => 'Flight 10']);
+        $personne = [
+            'nom' => $request['personne.nom'],
+            'prenom' => $request['personne.prenom'],
+            'adresse' => $request['personne.adresse'],
+            'dateNais' => $request['personne.dateNais'],
+            'lieuNais' => $request['personne.lieuNais'],
+            'tel' => $request['personne.tel'],
+            'mail' => $request['personne.mail']
+        ];
 
-        // Retrieve flight by name, or create it with the name, delayed, and arrival_time attributes...
-        // $flight = App\Models\Flight::firstOrCreate(
-        //     ['name' => 'Flight 10'],
-        //     ['delayed' => 1, 'arrival_time' => '11:30']
-        // );
+        $etudiant = [
+            'matricule' => $request['etudiant.matricule'],
+            'observation' => $request['etudiant.observation'],
+            'parcour_id' => $request['etudiant.parcour_id'],
+            'niveau_id' => $request['etudiant.niveau_id'],
+            'AS_id' => $request['etudiant.AS_id']
+        ];
 
-        $data['matricule'] = $request['matricule'];
-        $data['observation'] = $request['observation'];
-        $data['personne_id'] = $request['personne_id'];
-        $data['parcour_id'] = $request['parcour_id'];
-        $data['niveau_id'] = $request['niveau_id'];
-        $data['AS_id'] = $request['AS_id'];
-        $validator = Validator::make($request->all(), Etudiant::rules(), Etudiant::$messages);
-
-        Etudiant::create($data);
-
-        return response()->json([
-            'message' => "Etudiant ajouté avec succès",
-            'success' => true
-        ], 200);
-    }
-
-    public function search(Request $request)
-    {
-        $validator0 = Validator::make($request->all(), Personne::rules(), Personne::$messages);
+        $validator0 = Validator::make($personne, Personne::rules(), Personne::$messages);
 
         if ($validator0->fails()) {
-            # code...
-            // $etudiant['personne_id'] = 
-            $personne = Personne::firstWhere(
-                [
-                    'tel' => $request['personne.tel'],
-                    'mail' => $request['personne.mail']
-                ]
-            );
-            $etudiant['personne_id'] = $personne->id;
-        } else {
-            # code...
-            $personne['nom'] = $request['personne.nom'];
-            $personne['prenom'] = $request['personne.prenom'];
-            $personne['adresse'] = $request['personne.adresse'];
-            $personne['dateNais'] = $request['personne.dateNais'];
-            $personne['lieuNais'] = $request['personne.lieuNais'];
-            $personne['tel'] = $request['personne.tel'];
-            $personne['mail'] = $request['personne.mail'];
+            try {
+                $pers = Personne::firstWhere(
+                    [
+                        'tel' => $personne['tel'],
+                        'mail' => $personne['mail']
+                    ]
+                );
 
-            $personne = Personne::create($personne);
-            $etudiant['personne_id'] = $personne->id;
+                $etudiant['personne_id'] = $pers->id;
+            } catch (\Throwable $th) {
+                $msg = '';
+                $pers = new Personne();
+                //tel same mail not
+                $pers0 = Personne::where('tel', $personne['tel'])->first();
+                $pers1 = Personne::where('mail', $personne['mail'])->first();
+
+                if ($pers0) {
+                    $pers = $pers0;
+                    $msg = 'Vous vouliez saisir ' . $pers->mail . ' au lieu de ' . $personne['mail'] . ' ?';
+                } else if ($pers1) {
+                    $pers = $pers1;
+                    $msg = 'Vous vouliez saisir ' . $pers->tel . ' au lieu de ' . $personne['tel'] . ' ?';
+                }
+
+                $et = $pers->etudiant;
+                //mail same tel not
+                //$pers = Personne::where('mail', $personne['mail'])->first();
+
+                //DO YOU MEAN THIS STUDENT?
+                return response()->json([
+                    'error' => $msg,
+                    'data' => $et
+                ]);
+            }
+        } else {
+
+            $pers = Personne::create($personne);
+            $etudiant['personne_id'] = $pers->id;
         }
 
-
-
-        $validator1 = Validator::make($request->all(), Etudiant::rules(), Etudiant::$messages);
+        $validator1 = Validator::make($etudiant, Etudiant::rules(), Etudiant::$messages);
 
         if ($validator1->fails()) {
-            return response()->json($validator0->errors());
+            $et = new Etudiant();
+            try {
+                $et = Etudiant::firstWhere(
+                    [
+                        'matricule' => $etudiant['matricule'],
+                        'personne_id' => $etudiant['personne_id']
+                    ]
+                );
+            } catch (\Throwable $th) {
+                $et = Etudiant::where('matricule', $etudiant['matricule'])
+                    ->orWhere('personne_id', $etudiant['personne_id'])->first();
+            }
+            return response()->json([
+                'error' => $validator1->errors(),
+                'data' => $et
+            ]);
         } else {
-            $etudiant['matricule'] = $request['etudiant.matricule'];
-            $etudiant['observation'] = $request['etudiant.observation'];
-            $etudiant['parcour_id'] = $request['etudiant.parcour_id'];
-            $etudiant['niveau_id'] = $request['etudiant.niveau_id'];
-            $etudiant['AS_id'] = $request['etudiant.AS_id'];
-            //TODO:validate personne_id
+
             Etudiant::create($etudiant);
 
             return response()->json([

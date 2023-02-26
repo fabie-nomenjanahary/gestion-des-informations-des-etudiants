@@ -19,4 +19,15 @@ class Parcour extends Model
     {
         return $this->hasMany('App\Models\Etudiant');
     }
+
+    public static function rules()
+    {
+        return [
+            'libelle' => 'unique:parcours,libelle'
+        ];
+    }
+
+    public static $messages = [
+        'libelle.unique' => 'Ce parcour existe déjà'
+    ];
 }

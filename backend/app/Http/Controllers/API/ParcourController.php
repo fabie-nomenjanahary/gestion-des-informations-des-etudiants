@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Parcour;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ParcourController extends Controller
 {
@@ -19,12 +20,21 @@ class ParcourController extends Controller
     {
         $data['libelle'] = $request['libelle'];
 
-        Parcour::create($data);
+        $validator = Validator::make($data, Parcour::rules(), Parcour::$messages);
 
-        return response()->json([
-            'message' => "Parcour ajouté avec succès",
-            'success' => true
-        ], 200);
+        if ($validator->fails()) {
+            return response()->json(
+                ['error' => $validator->errors()]
+            );
+        } else {
+
+            Parcour::create($data);
+
+            return response()->json([
+                'message' => "Parcour ajouté avec succès",
+                'success' => true
+            ], 200);
+        }
     }
 
     public function get($id)

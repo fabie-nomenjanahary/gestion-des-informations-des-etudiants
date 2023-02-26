@@ -73,7 +73,8 @@ export class EtudiantDialogComponent implements OnInit{
       idAS:['',Validators.required],
       adresse:['',Validators.required],
       tel: ['', Validators.required],
-      mail:['',Validators.required],
+      // TODO : ERROR Error: NG01101: Expected async validator to return Promise or Observable. Are you using a synchronous validator where an async validator is expected? Find more at https://angular.io/errors/NG01101
+      mail:['',Validators.required,Validators.email],
       observation:['']
     })
   }
@@ -114,39 +115,10 @@ getNiveaux() {
       etudiant.parcour_id = Number(this.selectedParcour);
       etudiant.niveau_id = Number(this.selectedNiveau);
       etudiant.AS_id = Number(this.selectedAS);
-      this.etudiantService.search(personne, etudiant).subscribe(res => {
+      this.etudiantService.create(personne, etudiant).subscribe(res => {
+        // TODO : show error/success message(s) 
         console.log(res)
       })
-      // this.personneService
-      //   .search(this.etudiantForm.value.nom, this.etudiantForm.value.prenom, this.etudiantForm.value.mail)
-      //   .subscribe(res => {
-      //     if (res.id) {
-      //       etudiant.personne_id = res.id;
-      //     } else {
-      //       personne.nom = this.etudiantForm.value.nom;
-      //       personne.prenom = this.etudiantForm.value.prenom;
-      //       personne.adresse = this.etudiantForm.value.adresse;
-      //       personne.dateNais = this.etudiantForm.value.dateNais.format('YYYY-MM-DD');
-      //       personne.lieuNais = this.etudiantForm.value.lieuNais;
-      //       personne.tel = this.etudiantForm.value.tel;
-      //       personne.mail = this.etudiantForm.value.mail;
-      //       this.personneService.create(personne).subscribe(res => {
-      //         //BUG
-      //         this.personneService.search(personne.nom, personne.prenom, personne.mail).subscribe(res => {
-      //           if (res.id) {
-      //             etudiant.personne_id = res.id;
-      //           } else {
-      //           }
-      //         })
-      //       })
-      //     }
-      //     console.log(etudiant);
-      //     this.etudiantService.create(etudiant).subscribe(res => {
-      //       console.log('success');
-      //       this.router.navigateByUrl('etudiants/list');
-      //     })
-
-      //   })
     } else {
       console.log('Invalid information');
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Personne;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PersonneController extends Controller
 {
@@ -25,12 +26,22 @@ class PersonneController extends Controller
         $data['tel'] = $request['tel'];
         $data['mail'] = $request['mail'];
 
-        Personne::create($data);
+        $validator = Validator::make($data, Personne::rules(), Personne::$messages);
 
-        return response()->json([
-            'message' => "Personne ajoutée avec succès",
-            'success' => true
-        ], 200);
+        if ($validator->fails()) {
+
+            return response()->json(
+                ['error' => $validator->errors()]
+            );
+        } else {
+
+            Personne::create($data);
+
+            return response()->json([
+                'message' => "Personne ajoutée avec succès",
+                'success' => true
+            ], 200);
+        }
     }
 
     public function get($id)

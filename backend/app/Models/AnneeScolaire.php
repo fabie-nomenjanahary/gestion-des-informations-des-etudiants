@@ -21,4 +21,16 @@ class AnneeScolaire extends Model
     {
         return $this->hasMany('App\Models\Etudiant');
     }
+
+    public static function rules()
+    {
+        return [
+            'annee' => 'unique:annee-scolaires,annee',
+            // TODO : array('debutAS', 'finAS')
+        ];
+    }
+
+    public static $messages = [
+        'annee.unique' => 'Ce nom d\'année scolaire existe déjà'
+    ];
 }
