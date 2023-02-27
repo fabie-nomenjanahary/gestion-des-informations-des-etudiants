@@ -12,7 +12,7 @@ class EtudiantController extends Controller
 {
     public function getAll()
     {
-        $data = Etudiant::get();
+        $data = Etudiant::with('personne')->with('parcour')->with('niveau')->with('anneeScolaire')->get();
 
         return response()->json($data, 200);
     }

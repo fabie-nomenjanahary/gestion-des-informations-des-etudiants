@@ -17,7 +17,8 @@ import { NiveauService } from 'src/app/niveau/niveau.service';
 import { Personne } from 'src/app/personne/personne.model';
 import { AnneeScolaire } from 'src/app/annee-scolaire/annee-scolaire.model';
 import { AnneeScolaireService } from 'src/app/annee-scolaire/annee-scolaire.service';
-import { PersonneService } from 'src/app/personne/personne.service';
+import { MatDialogRef } from "@angular/material/dialog";
+
 @Component({
   selector: 'app-etudiant-dialog',
   templateUrl: './etudiant-dialog.component.html',
@@ -51,7 +52,7 @@ export class EtudiantDialogComponent implements OnInit{
   constructor(private _adapter: DateAdapter<any>, @Inject(MAT_DATE_LOCALE) private _locale: string,
     private fb: FormBuilder, private etudiantService: EtudiantService, private router: Router,
     private parcourService: ParcourService, private niveauService: NiveauService,
-    private anneeScolaireService:AnneeScolaireService,private personneService:PersonneService
+    private anneeScolaireService: AnneeScolaireService, private dialogRef: MatDialogRef<EtudiantDialogComponent>
   ) {
     this._locale = 'fr';
     this._adapter.setLocale(this._locale);
@@ -74,7 +75,8 @@ export class EtudiantDialogComponent implements OnInit{
       adresse:['',Validators.required],
       tel: ['', Validators.required],
       // TODO : ERROR Error: NG01101: Expected async validator to return Promise or Observable. Are you using a synchronous validator where an async validator is expected? Find more at https://angular.io/errors/NG01101
-      mail:['',Validators.required,Validators.email],
+      // mail:['',Validators.required,Validators.email],
+      mail:['',Validators.required],
       observation:['']
     })
   }
@@ -115,9 +117,16 @@ getNiveaux() {
       etudiant.parcour_id = Number(this.selectedParcour);
       etudiant.niveau_id = Number(this.selectedNiveau);
       etudiant.AS_id = Number(this.selectedAS);
-      this.etudiantService.create(personne, etudiant).subscribe(res => {
-        // TODO : show error/success message(s) 
-        console.log(res)
+      // TODO : show error/success message(s) 
+      this.etudiantService.create(personne, etudiant).subscribe({
+        next: (res) => {
+          console.log(res);
+          this.etudiantForm.reset();
+          this.dialogRef.close('save');
+        },
+        error: () => {
+          alert("Un erreur s'est produit lors de l'ajout de cet étudiant");
+        }
       })
     } else {
       console.log('Invalid information');

@@ -6,8 +6,8 @@ import {
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
 } from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import * as moment from 'moment';
 import 'moment/locale/fr';
 import { AnneeScolaire } from '../../annee-scolaire.model';
 import { AnneeScolaireService } from '../../annee-scolaire.service';
@@ -38,7 +38,8 @@ export class AnneeScolaireDialogComponent implements OnInit{
   debutFC = new FormControl('', Validators.required);
   finFC = new FormControl('', Validators.required);
   constructor(private fb: FormBuilder, private _adapter: DateAdapter<any>, @Inject(MAT_DATE_LOCALE) private _locale: string,
-    public ASService:AnneeScolaireService,private router:Router
+    public ASService: AnneeScolaireService, private router: Router,
+    private dialogRef: MatDialogRef<AnneeScolaireDialogComponent>
   ) {
       this._locale = 'fr';
       this._adapter.setLocale(this._locale);
@@ -64,16 +65,22 @@ export class AnneeScolaireDialogComponent implements OnInit{
       } else {
         AS.annee = this.ASForm.value.debutAS.format('YYYY') + "-" + this.ASForm.value.finAS.format('YYYY');
       }
-      //BUG 
-      //TODO convert moment date
-      //2023-01-30 14:00:00
+
+      //TODO : WARNING-- moment date
+
       AS.debutAS = this.ASForm.value.debutAS.format('YYYY-MM-DD');
       AS.finAS = this.ASForm.value.finAS.format('YYYY-MM-DD');
-      console.log(AS)
-      console.log(typeof(AS.finAS))
-      this.ASService.create(AS).subscribe(res => {
-        console.log('success');
-        this.router.navigateByUrl('annee-scolaires/list');
+
+      this.ASService.create(AS).subscribe({
+        next: (res) => {
+          console.log(res);
+          this.ASForm.reset();
+          this.dialogRef.close('save');
+          // this.router.navigateByUrl('annee-scolaires/list');
+        },
+        error: () => {
+          alert("Un erreur s'est produit lors de l'ajout de cette année scolaire");
+        }
       })
       
     } else {

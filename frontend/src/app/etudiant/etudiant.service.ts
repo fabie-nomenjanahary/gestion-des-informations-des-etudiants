@@ -29,8 +29,8 @@ export class EtudiantService {
     return throwError(errorMessage);
   }
   
-  getAll(): Observable<Etudiant[]>{
-    return this.http.get<Etudiant[]>(etudiantURL)
+  getAll(): Observable<any[]>{
+    return this.http.get<any[]>(etudiantURL)
       .pipe(
       catchError(this.errorHandler)
     )

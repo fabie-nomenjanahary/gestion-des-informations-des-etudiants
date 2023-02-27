@@ -19,7 +19,6 @@ class Etudiant extends Model
         'niveau_id',
         'AS_id'
     ];
-
     public function personne()
     {
         return $this->belongsTo('App\Models\Personne');
@@ -34,7 +33,7 @@ class Etudiant extends Model
     {
         return $this->belongsTo('App\Models\Niveau');
     }
-
+    // TODO : many to many : annee sco,niveau?
     public function anneeScolaire()
     {
         return $this->belongsTo('App\Models\AnneeScolaire');

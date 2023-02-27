@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>Formulaire d'ajout de niveau</h1>
 <div mat-dialog-content>
     <form class="example-form" [formGroup]="niveauForm">
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
             <mat-label>Libellé</mat-label>
             <input formControlName="libelle" matInput placeholder="Ex:L1">
             <mat-icon matPrefix>class</mat-icon>
@@ -10,5 +10,5 @@
 </div>
 <div mat-dialog-actions align="center">
     <button mat-raised-button color="primary" cdkFocusInitial (click)="addNiveau()">Enregistrer</button>
-    <button mat-raised-button color="accent" mat-dialog-close>Annuler</button>
+    <button mat-raised-button color="warn" mat-dialog-close>Annuler</button>
 </div>
