@@ -17,9 +17,9 @@ class AnneeScolaire extends Model
         'finAS'
     ];
 
-    public function etudiants()
+    public function etudiantNiveau()
     {
-        return $this->hasMany('App\Models\Etudiant');
+        return $this->hasOne(EtudiantNiveau::class);
     }
 
     public static function rules()

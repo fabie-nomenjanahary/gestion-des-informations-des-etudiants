@@ -17,7 +17,7 @@ class Niveau extends Model
 
     public function etudiants()
     {
-        return $this->hasMany('App\Models\Etudiant');
+        return $this->belongsToMany(Etudiant::class, 'etudiant_niveaux');
     }
 
     public static function rules()

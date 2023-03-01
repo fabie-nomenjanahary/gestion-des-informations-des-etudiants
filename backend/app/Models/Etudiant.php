@@ -29,15 +29,12 @@ class Etudiant extends Model
         return $this->belongsTo('App\Models\Parcour');
     }
 
-    public function niveau()
+    public function niveaux()
     {
-        return $this->belongsTo('App\Models\Niveau');
+        return $this->belongsToMany(Niveau::class, 'etudiant_niveaux');
     }
     // TODO : many to many : annee sco,niveau?
-    public function anneeScolaire()
-    {
-        return $this->belongsTo('App\Models\AnneeScolaire');
-    }
+
 
     public static function rules()
     {
