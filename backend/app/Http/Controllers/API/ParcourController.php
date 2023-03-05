@@ -11,7 +11,7 @@ class ParcourController extends Controller
 {
     public function getAll()
     {
-        $data = Parcour::get();
+        $data = Parcour::with('etudiants')->get();
 
         return response()->json($data, 200);
     }

@@ -67,7 +67,6 @@ class PersonneController extends Controller
         $data['nom'] = $request['nom'];
         $data['prenom'] = $request['prenom'];
         $data['adresse'] = $request['adresse'];
-        //todo convert to mysql date
         $data['dateNais'] = $request['dateNais'];
         $data['lieuNais'] = $request['lieuNais'];
         $data['tel'] = $request['tel'];

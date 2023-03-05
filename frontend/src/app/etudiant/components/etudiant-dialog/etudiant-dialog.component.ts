@@ -17,7 +17,7 @@ import { NiveauService } from 'src/app/niveau/niveau.service';
 import { Personne } from 'src/app/personne/personne.model';
 import { AnneeScolaire } from 'src/app/annee-scolaire/annee-scolaire.model';
 import { AnneeScolaireService } from 'src/app/annee-scolaire/annee-scolaire.service';
-import { MatDialogRef } from "@angular/material/dialog";
+import { MatDialogRef, MAT_DIALOG_DATA} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-etudiant-dialog',
@@ -42,16 +42,15 @@ import { MatDialogRef } from "@angular/material/dialog";
 export class EtudiantDialogComponent implements OnInit{
 
   etudiantForm: FormGroup;
-  selectedParcour: string;
-  selectedNiveau: string;
-  selectedAS: string;
   parcours: Parcour[];
   niveaux: Niveau[];
   anneeScolaires: AnneeScolaire[];
-
+  btn: string = 'Enregistrer';
+  title: string = 'Ajouter un étudiant';
   constructor(private _adapter: DateAdapter<any>, @Inject(MAT_DATE_LOCALE) private _locale: string,
     private fb: FormBuilder, private etudiantService: EtudiantService, private router: Router,
     private parcourService: ParcourService, private niveauService: NiveauService,
+    @Inject(MAT_DIALOG_DATA) public data:any,
     private anneeScolaireService: AnneeScolaireService, private dialogRef: MatDialogRef<EtudiantDialogComponent>
   ) {
     this._locale = 'fr';
@@ -79,6 +78,24 @@ export class EtudiantDialogComponent implements OnInit{
       mail:['',Validators.required],
       observation:['']
     })
+
+    console.log(this.data);
+    if (this.data) {
+      this.btn = this.data.btn;
+      this.title = this.data.title;
+      this.etudiantForm.controls['matricule'].setValue(this.data.row.matricule);
+      this.etudiantForm.controls['nom'].setValue(this.data.row.nom);
+      this.etudiantForm.controls['prenom'].setValue(this.data.row.prenom);
+      this.etudiantForm.controls['dateNais'].setValue(this.data.row.dateNais);
+      this.etudiantForm.controls['lieuNais'].setValue(this.data.row.lieuNais);
+      this.etudiantForm.controls['idParcour'].setValue(this.data.row.parcour_id);
+      this.etudiantForm.controls['idNiveau'].setValue(this.data.row.niveaux);
+      this.etudiantForm.controls['idAS'].setValue(this.data.row.niveaux);
+      this.etudiantForm.controls['adresse'].setValue(this.data.row.adresse);
+      this.etudiantForm.controls['tel'].setValue(this.data.row.tel);
+      this.etudiantForm.controls['mail'].setValue(this.data.row.mail);
+      this.etudiantForm.controls['observation'].setValue(this.data.row.observation);
+    }
   }
  getParcours() {
     this.parcourService.getAll().subscribe((data: Parcour[]) => {
@@ -98,7 +115,7 @@ getNiveaux() {
   }
   addEtudiant() {
 
-    
+    console.log(this.etudiantForm.value)
     if (this.etudiantForm.valid) {
       
       let personne: Personne = new Personne();
@@ -114,9 +131,9 @@ getNiveaux() {
 
       etudiant.matricule = this.etudiantForm.value.matricule;
       etudiant.observation = this.etudiantForm.value.observation;
-      etudiant.parcour_id = Number(this.selectedParcour);
-      etudiant.niveau_id = Number(this.selectedNiveau);
-      etudiant.AS_id = Number(this.selectedAS);
+      etudiant.parcour_id = Number(this.etudiantForm.value.idNiveau);
+      etudiant.niveau_id = Number(this.etudiantForm.value.idParcour);
+      etudiant.AS_id = Number(this.etudiantForm.value.idAS);
       // TODO : show error/success message(s) 
       this.etudiantService.create(personne, etudiant).subscribe({
         next: (res) => {

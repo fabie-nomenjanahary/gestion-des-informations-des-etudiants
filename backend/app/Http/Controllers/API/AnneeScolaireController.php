@@ -14,7 +14,7 @@ class AnneeScolaireController extends Controller
     public function getAll()
     {
         // var_dump(new DateTime('2020-12-30'));
-        $data = AnneeScolaire::find(1)->etudiants()->get();
+        $data = AnneeScolaire::get();
 
         return response()->json($data, 200);
     }

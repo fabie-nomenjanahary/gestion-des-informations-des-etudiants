@@ -31,10 +31,13 @@ class Etudiant extends Model
 
     public function niveaux()
     {
-        return $this->belongsToMany(Niveau::class, 'etudiant_niveaux');
+        return $this->belongsToMany(Niveau::class, 'etudiant_niveaux')
+            ->withPivot([
+                'etudiant_id',
+                'niveau_id',
+                'AS_id'
+            ]);
     }
-    // TODO : many to many : annee sco,niveau?
-
 
     public static function rules()
     {

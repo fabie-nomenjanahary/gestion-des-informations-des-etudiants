@@ -17,15 +17,16 @@ class AnneeScolaire extends Model
         'finAS'
     ];
 
-    public function etudiantNiveau()
+    public function etudiantNiveaux()
     {
-        return $this->hasOne(EtudiantNiveau::class);
+        return $this->hasMany(EtudiantNiveau::class);
     }
 
     public static function rules()
     {
         return [
             'annee' => 'unique:annee-scolaires,annee',
+            'debutAS' => 'unique:annee-scolaires,debutAS,' . $this->id . ',id,finAS,' . $this->finAS,
             // TODO : array('debutAS', 'finAS')
         ];
     }

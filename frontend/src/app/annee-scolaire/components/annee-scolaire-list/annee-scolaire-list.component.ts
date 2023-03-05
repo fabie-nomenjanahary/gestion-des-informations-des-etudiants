@@ -13,7 +13,7 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./annee-scolaire-list.component.css']
 })
 export class AnneeScolaireListComponent implements OnInit{
-  displayedColumns: string[] = ['annee', 'debutAS','finAS'];
+  displayedColumns: string[] = ['annee', 'debutAS','finAS','actions'];
   dataSource: MatTableDataSource<AnneeScolaire>;
   anneeScolaires: AnneeScolaire[];
 
@@ -30,12 +30,13 @@ export class AnneeScolaireListComponent implements OnInit{
   }
 
   getAnneeScolaires() {
-     this.anneeScolaireService.getAll().subscribe((data: AnneeScolaire[]) => {
-       this.anneeScolaires = data;
-       console.log(this.anneeScolaires);
-        this.dataSource = new MatTableDataSource(this.anneeScolaires);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+    this.anneeScolaireService.getAll().subscribe((data: AnneeScolaire[]) => {
+    this.anneeScolaires = data;
+    console.log(this.anneeScolaires);
+    this.dataSource = new MatTableDataSource(this.anneeScolaires);
+    this.paginator._intl.itemsPerPageLabel = "Eléments par page";
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
     })
   }
   

@@ -13,7 +13,7 @@ import { NiveauDialogComponent } from '../niveau-dialog/niveau-dialog.component'
   styleUrls: ['./niveau-list.component.css']
 })
 export class NiveauListComponent implements OnInit{
-  displayedColumns: string[] = ['libelle'];
+  displayedColumns: string[] = ['libelle','nombre','actions'];
   dataSource: MatTableDataSource<Niveau>;
   niveaux: Niveau[];
 
@@ -26,11 +26,12 @@ export class NiveauListComponent implements OnInit{
   }
   getNiveaux() {
     this.niveauService.getAll().subscribe((data: Niveau[]) => {
-      this.niveaux = data;
-      console.log(this.niveaux);
-      this.dataSource = new MatTableDataSource(this.niveaux);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+    this.niveaux = data;
+    console.log(this.niveaux);
+    this.dataSource = new MatTableDataSource(this.niveaux);
+    this.paginator._intl.itemsPerPageLabel = "Eléments par page";
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
     })
   }
   

@@ -14,7 +14,7 @@ import { ParcourDialogComponent } from '../parcour-dialog/parcour-dialog.compone
 })
 export class ParcourListComponent implements OnInit{
   // IDEA : add a description for each parcour?
-  displayedColumns: string[] = ['libelle'];
+  displayedColumns: string[] = ['libelle','nombre','actions'];
   dataSource: MatTableDataSource<Parcour>;
   parcours: Parcour[];
 
@@ -27,11 +27,12 @@ export class ParcourListComponent implements OnInit{
   }
   getParcours() {
     this.parcourService.getAll().subscribe((data: Parcour[]) => {
-      this.parcours = data;
-      console.log(this.parcours);
-      this.dataSource = new MatTableDataSource(this.parcours);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+    this.parcours = data;
+    console.log(this.parcours);
+    this.dataSource = new MatTableDataSource(this.parcours);
+    this.paginator._intl.itemsPerPageLabel = "Eléments par page";
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
     })
   }
   

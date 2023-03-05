@@ -12,8 +12,12 @@ class EtudiantController extends Controller
 {
     public function getAll()
     {
-        $data = Etudiant::with('personne')->with('parcour')->with('niveau')->with('anneeScolaire')->get();
-
+        $data = Etudiant::with('personne')->with('parcour')->with('niveaux')->get();
+        //   [
+        //                 'niveaux' => function ($query) {
+        //                     $query->where('', 'like', '%first%');
+        //                 }
+        //             ]
         return response()->json($data, 200);
     }
 
@@ -32,10 +36,10 @@ class EtudiantController extends Controller
         $etudiant = [
             'matricule' => $request['etudiant.matricule'],
             'observation' => $request['etudiant.observation'],
-            'parcour_id' => $request['etudiant.parcour_id'],
-            'niveau_id' => $request['etudiant.niveau_id'],
-            'AS_id' => $request['etudiant.AS_id']
+            'parcour_id' => $request['etudiant.parcour_id']
         ];
+        $niveau_id = $request['etudiant.niveau_id'];
+        $AS_id = $request['etudiant.AS_id'];
 
         $validator0 = Validator::make($personne, Personne::rules(), Personne::$messages);
 
@@ -65,8 +69,6 @@ class EtudiantController extends Controller
                 }
 
                 $et = $pers->etudiant;
-                //mail same tel not
-                //$pers = Personne::where('mail', $personne['mail'])->first();
 
                 //DO YOU MEAN THIS STUDENT?
                 return response()->json([
@@ -101,8 +103,8 @@ class EtudiantController extends Controller
             ]);
         } else {
 
-            Etudiant::create($etudiant);
-
+            $et = Etudiant::create($etudiant);
+            $et->niveaux()->attach($niveau_id, ['AS_id' => $AS_id]);
             return response()->json([
                 'message' => "Etudiant ajouté avec succès",
                 'success' => true

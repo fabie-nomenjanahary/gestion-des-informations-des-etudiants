@@ -14,7 +14,7 @@ import {MatTableDataSource} from '@angular/material/table';
 })
 export class EtudiantListComponent implements OnInit{
 
-  displayedColumns: string[] = ['matricule', 'nom','prenom','dateNais', 'parcour','niveau'];
+  displayedColumns: string[] = ['matricule', 'nom','prenom','dateNais', 'parcour','actions'];
   dataSource: MatTableDataSource<any>;
   etudiants: any[];
 
@@ -28,11 +28,12 @@ export class EtudiantListComponent implements OnInit{
   }
   getEtudiants() {
     this.etudiantService.getAll().subscribe((data: any[]) => {
-      this.etudiants = data;
-      console.log(this.etudiants);
-      this.dataSource = new MatTableDataSource(this.convertData(this.etudiants));
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+    this.etudiants = data;
+    console.log(this.etudiants);
+    this.dataSource = new MatTableDataSource(this.convertData(this.etudiants));
+    this.paginator._intl.itemsPerPageLabel = "Eléments par page";
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
     })
   } 
  
@@ -47,18 +48,13 @@ export class EtudiantListComponent implements OnInit{
         prenom: etudiant.personne.prenom,
         dateNais: etudiant.personne.dateNais,
         lieuNais: etudiant.personne.lieuNais,
+        adresse: etudiant.personne.adresse,
         tel: etudiant.personne.tel,
         mail: etudiant.personne.mail,
         parcour_id: etudiant.parcour_id,
         parcour: etudiant.parcour.libelle,
-        niveau_id: etudiant.niveau_id,
-        niveau: etudiant.niveau.libelle,
-        AS_id: etudiant.AS_id,
-        // TODO : can't get anneeScolaire value
-        // annee: etudiant.anneeScolaire.annee,
-        // debutAS: etudiant.anneeScolaire.debutAS,
-        // finAS: etudiant.anneeScolaire.finAS,
-        
+        // TODO : niveau & annee scolaire actuel
+        niveaux:this.myToString(etudiant.niveaux)
       }
       converted_etudiants.push(etudiant);
     });
@@ -66,7 +62,10 @@ export class EtudiantListComponent implements OnInit{
     return converted_etudiants;
   }
 
-  // TODO : filter into all the columns?
+  myToString(niveaux: []) {
+    
+    return '';
+  }
     applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -79,11 +78,38 @@ export class EtudiantListComponent implements OnInit{
 
   openDialog() {
     this.etudiantDialog.open(EtudiantDialogComponent, {
-      width:'40%'
+      width:'40%',
     })
   }
-
+  openDetailsDialog(row:any) {
+   this.etudiantDialog.open(EtudiantDialogComponent, {
+     width: '40%',
+     data: {
+       btn: 'Ok',
+       title:'Details de l\'étudiant',
+       row
+     },
+     
+   })
+  }
+  openEditDialog(row:any) {
+   this.etudiantDialog.open(EtudiantDialogComponent, {
+     width: '40%',
+     data: {
+       btn: 'Mettre à jour',
+       title:'Modifier l\'étudiant',
+       row
+     },
+     
+   })
+  }
+  openDeleteDialog(id:string) {
+    if (confirm('Vous voulez vraiment le supprimer?')) {
+      this.deleteEtudiant(Number(id));
+    }
+  }
   deleteEtudiant(id: number) {
+    console.log('deleting....')
     //TODO
   }
 }

@@ -11,7 +11,7 @@ class NiveauController extends Controller
 {
     public function getAll()
     {
-        $data = Niveau::get();
+        $data = Niveau::with('etudiants')->get();
 
         return response()->json($data, 200);
     }
