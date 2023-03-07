@@ -26,12 +26,25 @@ class AnneeScolaire extends Model
     {
         return [
             'annee' => 'unique:annee-scolaires,annee',
-            'debutAS' => 'unique:annee-scolaires,debutAS,' . $this->id . ',id,finAS,' . $this->finAS,
+            'debutAS' => 'unique:annee-scolaires,debutAS',
+            'finAS' => 'unique:annee-scolaires,finAS',
+            // TODO : array('debutAS', 'finAS')
+        ];
+    }
+
+    public static function updateRules($id)
+    {
+        return [
+            'annee' => 'unique:annee-scolaires,annee,' . $id,
+            'debutAS' => 'unique:annee-scolaires,debutAS,' . $id,
+            'finAS' => 'unique:annee-scolaires,finAS,' . $id,
             // TODO : array('debutAS', 'finAS')
         ];
     }
 
     public static $messages = [
-        'annee.unique' => 'Ce nom d\'année scolaire existe déjà'
+        'annee.unique' => 'Ce nom d\'année scolaire existe déjà',
+        'debutAS.unique' => 'Ce début d\'année scolaire existe déjà',
+        'finAS.unique' => 'Ce fin d\'année scolaire existe déjà',
     ];
 }

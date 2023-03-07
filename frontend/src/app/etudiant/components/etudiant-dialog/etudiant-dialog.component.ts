@@ -46,7 +46,9 @@ export class EtudiantDialogComponent implements OnInit{
   niveaux: Niveau[];
   anneeScolaires: AnneeScolaire[];
   btn: string = 'Enregistrer';
+  cancelBtn: string = 'Annuler';
   title: string = 'Ajouter un étudiant';
+  isDetails: boolean = false;
   constructor(private _adapter: DateAdapter<any>, @Inject(MAT_DATE_LOCALE) private _locale: string,
     private fb: FormBuilder, private etudiantService: EtudiantService, private router: Router,
     private parcourService: ParcourService, private niveauService: NiveauService,
@@ -81,7 +83,13 @@ export class EtudiantDialogComponent implements OnInit{
 
     console.log(this.data);
     if (this.data) {
-      this.btn = this.data.btn;
+      if (this.data.btn) {
+        this.btn = this.data.btn;
+      }
+      if (this.data.cancelBtn) {
+        this.cancelBtn = this.data.cancelBtn;
+        this.isDetails = true;
+      }
       this.title = this.data.title;
       this.etudiantForm.controls['matricule'].setValue(this.data.row.matricule);
       this.etudiantForm.controls['nom'].setValue(this.data.row.nom);
@@ -116,37 +124,55 @@ getNiveaux() {
   addEtudiant() {
 
     console.log(this.etudiantForm.value)
-    if (this.etudiantForm.valid) {
+      if (this.etudiantForm.valid) {
       
-      let personne: Personne = new Personne();
-      let etudiant: Etudiant = new Etudiant();
+        let personne: Personne = new Personne();
+        let etudiant: Etudiant = new Etudiant();
 
-      personne.nom = this.etudiantForm.value.nom;
-      personne.prenom = this.etudiantForm.value.prenom;
-      personne.adresse = this.etudiantForm.value.adresse;
-      personne.dateNais = this.etudiantForm.value.dateNais.format('YYYY-MM-DD');
-      personne.lieuNais = this.etudiantForm.value.lieuNais;
-      personne.tel = this.etudiantForm.value.tel;
-      personne.mail = this.etudiantForm.value.mail;
+        personne.nom = this.etudiantForm.value.nom;
+        personne.prenom = this.etudiantForm.value.prenom;
+        personne.adresse = this.etudiantForm.value.adresse;
+        personne.dateNais = this.etudiantForm.value.dateNais.format('YYYY-MM-DD');
+        personne.lieuNais = this.etudiantForm.value.lieuNais;
+        personne.tel = this.etudiantForm.value.tel;
+        personne.mail = this.etudiantForm.value.mail;
 
-      etudiant.matricule = this.etudiantForm.value.matricule;
-      etudiant.observation = this.etudiantForm.value.observation;
-      etudiant.parcour_id = Number(this.etudiantForm.value.idNiveau);
-      etudiant.niveau_id = Number(this.etudiantForm.value.idParcour);
-      etudiant.AS_id = Number(this.etudiantForm.value.idAS);
-      // TODO : show error/success message(s) 
-      this.etudiantService.create(personne, etudiant).subscribe({
-        next: (res) => {
-          console.log(res);
-          this.etudiantForm.reset();
-          this.dialogRef.close('save');
-        },
-        error: () => {
-          alert("Un erreur s'est produit lors de l'ajout de cet étudiant");
+        etudiant.matricule = this.etudiantForm.value.matricule;
+        etudiant.observation = this.etudiantForm.value.observation;
+        etudiant.parcour_id = Number(this.etudiantForm.value.idNiveau);
+        etudiant.niveau_id = Number(this.etudiantForm.value.idParcour);
+        etudiant.AS_id = Number(this.etudiantForm.value.idAS);
+        if (!this.data) {
+          // TODO : show error/success message(s) 
+          this.etudiantService.create(personne, etudiant).subscribe({
+            next: (res) => {
+              console.log(res);
+              this.etudiantForm.reset();
+              this.dialogRef.close('save');
+            },
+            error: () => {
+              alert("Une erreur s'est produite lors de l'ajout de cet étudiant");
+            }
+          })
+        } else {
+          // TODO : show error/success message(s)
+          personne.id = this.data.row.personne_id;
+          etudiant.personne_id = personne.id;
+          this.etudiantService.update(Number(this.data.row.id),personne, etudiant).subscribe({
+            next: (res) => {
+              console.log(res);
+              this.etudiantForm.reset();
+              this.dialogRef.close('update');
+            },
+            error: () => {
+              alert("Une erreur s'est produite lors de la modification de cet étudiant");
+            }
+          })
         }
-      })
-    } else {
-      console.log('Invalid information');
-    }
+        
+
+      } else {
+        console.log('Invalid information');
+      }
   }
 }

@@ -35,30 +35,30 @@ Route::prefix('etudiants')->group(function () {
     Route::get('/', [EtudiantController::class, 'getAll']);
     Route::get('/{id}', [EtudiantController::class, 'get']);
     Route::post('/', [EtudiantController::class, 'create']);
-    Route::put('/', [EtudiantController::class, 'update']);
-    Route::delete('/', [EtudiantController::class, 'delete']);
+    Route::put('/{id}', [EtudiantController::class, 'update']);
+    Route::delete('/{id}', [EtudiantController::class, 'delete']);
 });
 
 Route::prefix('niveaux')->group(function () {
     Route::get('/', [NiveauController::class, 'getAll']);
     Route::get('/{id}', [NiveauController::class, 'get']);
     Route::post('/', [NiveauController::class, 'create']);
-    Route::put('/', [NiveauController::class, 'update']);
-    Route::delete('/', [NiveauController::class, 'delete']);
+    Route::put('/{id}', [NiveauController::class, 'update']);
+    Route::delete('/{id}', [NiveauController::class, 'delete']);
 });
 
 Route::prefix('parcours')->group(function () {
     Route::get('/', [ParcourController::class, 'getAll']);
     Route::get('/{id}', [ParcourController::class, 'get']);
     Route::post('/', [ParcourController::class, 'create']);
-    Route::put('/', [ParcourController::class, 'update']);
-    Route::delete('/', [ParcourController::class, 'delete']);
+    Route::put('/{id}', [ParcourController::class, 'update']);
+    Route::delete('/{id}', [ParcourController::class, 'delete']);
 });
 
 Route::prefix('personnes')->group(function () {
     Route::get('/', [PersonneController::class, 'getAll']);
     Route::get('/{id}', [PersonneController::class, 'get']);
     Route::post('/', [PersonneController::class, 'create']);
-    Route::put('/', [PersonneController::class, 'update']);
-    Route::delete('/', [PersonneController::class, 'delete']);
+    Route::put('/{id}', [PersonneController::class, 'update']);
+    Route::delete('/{id}', [PersonneController::class, 'delete']);
 });

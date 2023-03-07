@@ -1,6 +1,7 @@
-<h1 mat-dialog-title>Formulaire d'ajout d'année scolaire</h1>
+<h1 mat-dialog-title>{{title}}</h1>
 <div mat-dialog-content>
     <form class="example-form" [formGroup]="ASForm">
+        <hr>
         <mat-form-field appearance="outline">
             <mat-label>Année scolaire</mat-label>
             <input formControlName="annee" matInput placeholder="Ex:2011-2012">
@@ -19,6 +20,6 @@
     </form>
 </div>
 <div mat-dialog-actions align="center">
-    <button mat-raised-button color="primary" cdkFocusInitial (click)="addAnneeScolaire()">Enregistrer</button>
-    <button mat-raised-button color="warn" mat-dialog-close>Annuler</button>
+    <button mat-raised-button color="primary" cdkFocusInitial (click)="addAnneeScolaire()" *ngIf="!isDetails" >{{btn}}</button>
+    <button mat-raised-button color="warn" mat-dialog-close>{{cancelBtn}}</button>
 </div>

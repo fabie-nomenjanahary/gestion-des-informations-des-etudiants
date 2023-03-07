@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild} from '@angular/core';
 import { AnneeScolaire } from '../../annee-scolaire.model';
 import { AnneeScolaireService } from '../../annee-scolaire.service';
-import { MatDialog, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatDialog } from "@angular/material/dialog";
 import { AnneeScolaireDialogComponent } from '../annee-scolaire-dialog/annee-scolaire-dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -52,10 +52,50 @@ export class AnneeScolaireListComponent implements OnInit{
   openDialog() {
     this.ASDialog.open(AnneeScolaireDialogComponent, {
       width:'30%'
+    }).afterClosed().subscribe(val => {
+      if (val==='save') {
+        this.getAnneeScolaires();
+      }
     })
   }
 
-  deleteAnneeScolaire(id: number) {
-    //TODO
+  openDetailsDialog(row: any) {
+    this.ASDialog.open(AnneeScolaireDialogComponent, {
+      width: '30%',
+      data: {
+        cancelBtn:'Fermer',
+        title: 'Details de l\'année scolaire',
+        row
+      }
+    })
+  }
+
+  openEditDialog(row: any) {
+    this.ASDialog.open(AnneeScolaireDialogComponent, {
+      width: '30%',
+      data: {
+        btn:'Mettre à jour',
+        title: 'Modifier l\'année scolaire',
+        row
+      }
+    }).afterClosed().subscribe(val => {
+      if (val==='update') {
+        this.getAnneeScolaires();
+      }
+    })
+  }
+
+  openDeleteDialog(id: string) {
+    if (confirm('Vous voulez vraiment supprimer cette année scolaire?')) {
+      this.anneeScolaireService.delete(Number(id)).subscribe({
+        next: (res) => {
+          console.log(res);
+          this.getAnneeScolaires();
+        },
+        error: () => {
+          alert('Une erreur s\'est produite lors de la suppression de cette année scolaire');
+        }
+      })
+    }
   }
 }

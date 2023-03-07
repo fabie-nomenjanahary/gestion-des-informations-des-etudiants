@@ -27,6 +27,13 @@ class Niveau extends Model
         ];
     }
 
+    public static function updateRules($id)
+    {
+        return [
+            'libelle' => 'unique:niveaux,libelle,' . $id
+        ];
+    }
+
     public static $messages = [
         'libelle.unique' => 'Ce niveau existe déjà'
     ];

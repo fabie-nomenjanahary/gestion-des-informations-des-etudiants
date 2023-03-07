@@ -51,8 +51,8 @@ export class EtudiantService {
     )
   }
 
-  update(id: number, etudiant: Etudiant): Observable<Etudiant>{
-    return this.http.put<Etudiant>(etudiantURL + id, JSON.stringify(etudiant), this.httpOptions)
+  update(id: number,personne: Personne, etudiant: Etudiant): Observable<Etudiant>{
+    return this.http.put<Etudiant>(etudiantURL + id, JSON.stringify({'personne':personne,'etudiant':etudiant}), this.httpOptions)
       .pipe(
       catchError(this.errorHandler)
     )

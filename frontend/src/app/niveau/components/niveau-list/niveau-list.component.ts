@@ -19,7 +19,7 @@ export class NiveauListComponent implements OnInit{
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  constructor(private niveauService: NiveauService, private etudiantDialog: MatDialog) { }
+  constructor(private niveauService: NiveauService, private niveauDialog: MatDialog) { }
   
   ngOnInit(): void {
     this.getNiveaux();
@@ -45,12 +45,52 @@ export class NiveauListComponent implements OnInit{
     }
   }
   openDialog() {
-    this.etudiantDialog.open(NiveauDialogComponent, {
+    this.niveauDialog.open(NiveauDialogComponent, {
       width:'30%'
+    }).afterClosed().subscribe(val => {
+      if (val==='save') {
+        this.getNiveaux();
+      }
     })
   }
 
-  deleteNiveau(id: number) {
-    //TODO
+  openDetailsDialog(row: any) {
+    this.niveauDialog.open(NiveauDialogComponent, {
+      width: '30%',
+      data: {
+        cancelBtn:'Fermer',
+        title: 'Details du niveau',
+        row
+      }
+    })
+  }
+
+  openEditDialog(row: any) {
+    this.niveauDialog.open(NiveauDialogComponent, {
+      width: '30%',
+      data: {
+        btn:'Mettre à jour',
+        title: 'Modifier le niveau',
+        row
+      }
+    }).afterClosed().subscribe(val => {
+      if (val==='update') {
+        this.getNiveaux();
+      }
+    })
+  }
+
+  openDeleteDialog(id: string) {
+    if (confirm('Vous voulez vraiment supprimer ce niveau?')) {
+      this.niveauService.delete(Number(id)).subscribe({
+        next: (res) => {
+          console.log(res);
+          this.getNiveaux();
+        },
+        error: () => {
+          alert('Une erreur s\'est produite lors de la suppression de ce niveau');
+        }
+      })
+    }
   }
 }

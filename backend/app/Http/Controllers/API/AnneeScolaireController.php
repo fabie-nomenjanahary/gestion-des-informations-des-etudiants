@@ -55,12 +55,21 @@ class AnneeScolaireController extends Controller
         $data['debutAS'] = $request['debutAS'];
         $data['finAS'] = $request['finAS'];
 
-        AnneeScolaire::find($id)->update($data);
+        $validator = Validator::make($data, AnneeScolaire::updateRules($id), AnneeScolaire::$messages);
 
-        return response()->json([
-            'message' => 'Année scolaire modifiée avec succès',
-            'success' => true
-        ], 200);
+        if ($validator->fails()) {
+            return response()->json([
+                'error' => $validator->errors()
+            ]);
+        } else {
+
+            AnneeScolaire::find($id)->update($data);
+
+            return response()->json([
+                'message' => 'Année scolaire modifiée avec succès',
+                'success' => true
+            ], 200);
+        }
     }
 
     public function delete($id)

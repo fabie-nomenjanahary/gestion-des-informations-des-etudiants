@@ -72,12 +72,22 @@ class PersonneController extends Controller
         $data['tel'] = $request['tel'];
         $data['mail'] = $request['mail'];
 
-        Personne::find($id)->update($data);
+        $validator = Validator::make($data, Personne::updateRules($id), Personne::$messages);
 
-        return response()->json([
-            'message' => 'Personne modifiée avec succès',
-            'success' => true
-        ], 200);
+        if ($validator->fails()) {
+
+            return response()->json(
+                ['error' => $validator->errors()]
+            );
+        } else {
+
+            Personne::find($id)->update($data);
+
+            return response()->json([
+                'message' => 'Personne modifiée avec succès',
+                'success' => true
+            ], 200);
+        }
     }
 
     public function delete($id)

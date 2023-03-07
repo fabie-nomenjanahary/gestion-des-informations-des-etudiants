@@ -48,12 +48,21 @@ class ParcourController extends Controller
     {
         $data['libelle'] = $request['libelle'];
 
-        Parcour::find($id)->update($data);
+        $validator = Validator::make($data, Parcour::updateRules($id), Parcour::$messages);
 
-        return response()->json([
-            'message' => 'Parcour modifié avec succès',
-            'success' => true
-        ], 200);
+        if ($validator->fails()) {
+            return response()->json(
+                ['error' => $validator->errors()]
+            );
+        } else {
+
+            Parcour::find($id)->update($data);
+
+            return response()->json([
+                'message' => 'Parcour modifié avec succès',
+                'success' => true
+            ], 200);
+        }
     }
 
     public function delete($id)

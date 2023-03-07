@@ -48,10 +48,50 @@ export class ParcourListComponent implements OnInit{
   openDialog() {
     this.parcourDialog.open(ParcourDialogComponent, {
       width:'30%'
+    }).afterClosed().subscribe(val => {
+      if (val==='save') {
+        this.getParcours();
+      }
     })
   }
 
-  deleteParcour(id: number) {
-    //TODO
+  openDetailsDialog(row: any) {
+    this.parcourDialog.open(ParcourDialogComponent, {
+      width: '30%',
+      data: {
+        cancelBtn:'Fermer',
+        title: 'Details du parcour',
+        row
+      }
+    })
+  }
+
+  openEditDialog(row: any) {
+    this.parcourDialog.open(ParcourDialogComponent, {
+      width: '30%',
+      data: {
+        btn:'Mettre à jour',
+        title: 'Modifier le parcour',
+        row
+      }
+    }).afterClosed().subscribe(val => {
+      if (val==='update') {
+        this.getParcours();
+      }
+    })
+  }
+
+  openDeleteDialog(id: string) {
+    if (confirm('Vous voulez vraiment supprimer ce parcour?')) {
+      this.parcourService.delete(Number(id)).subscribe({
+        next: (res) => {
+          console.log(res);
+          this.getParcours();
+        },
+        error: () => {
+          alert('Une erreur s\'est produite lors de la suppression de ce parcour');
+        }
+      })
+    }
   }
 }

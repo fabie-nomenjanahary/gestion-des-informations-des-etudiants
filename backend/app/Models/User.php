@@ -45,6 +45,14 @@ class User extends Authenticatable
         ];
     }
 
+    public static function updateRules($id)
+    {
+        return [
+            'email' => 'unique:users,email,' . $id
+        ];
+    }
+
+
     public static $messages = [
         'email.unique' => 'Cet adresse e-mail est déjà utilisé par un autre compte'
     ];

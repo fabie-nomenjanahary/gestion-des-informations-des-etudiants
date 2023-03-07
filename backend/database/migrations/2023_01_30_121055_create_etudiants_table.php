@@ -22,10 +22,6 @@ class CreateEtudiantsTable extends Migration
             $table->unsignedBigInteger('parcour_id');
             $table->foreign('personne_id')->references('id')->on('personnes')->onDelete('cascade');
             $table->foreign('parcour_id')->references('id')->on('parcours')->onDelete('cascade');
-            // $table->unsignedBigInteger('niveau_id');
-            // $table->foreign('niveau_id')->references('id')->on('niveaux');
-            // $table->unsignedBigInteger('AS_id');
-            // $table->foreign('AS_id')->references('id')->on('annee-scolaires');
         });
     }
 

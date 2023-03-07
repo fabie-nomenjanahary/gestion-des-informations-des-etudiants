@@ -27,6 +27,13 @@ class Parcour extends Model
         ];
     }
 
+    public static function updateRules($id)
+    {
+        return [
+            'libelle' => 'unique:parcours,libelle,' . $id
+        ];
+    }
+
     public static $messages = [
         'libelle.unique' => 'Ce parcour existe déjà'
     ];

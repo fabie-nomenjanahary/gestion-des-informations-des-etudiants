@@ -1,13 +1,14 @@
 import { Component,Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   MAT_MOMENT_DATE_FORMATS,
   MomentDateAdapter,
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
 } from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 import 'moment/locale/fr';
 import { AnneeScolaire } from '../../annee-scolaire.model';
 import { AnneeScolaireService } from '../../annee-scolaire.service';
@@ -35,10 +36,13 @@ import { AnneeScolaireService } from '../../annee-scolaire.service';
 export class AnneeScolaireDialogComponent implements OnInit{
   
   ASForm: FormGroup;
-  debutFC = new FormControl('', Validators.required);
-  finFC = new FormControl('', Validators.required);
+  btn: string = 'Enrengistrer';
+  cancelBtn: string = 'Annuler';
+  title: string = 'Aajouter une année scolaire';
+  isDetails: boolean = false;
   constructor(private fb: FormBuilder, private _adapter: DateAdapter<any>, @Inject(MAT_DATE_LOCALE) private _locale: string,
     public ASService: AnneeScolaireService, private router: Router,
+    @Inject(MAT_DIALOG_DATA) public data:any,
     private dialogRef: MatDialogRef<AnneeScolaireDialogComponent>
   ) {
       this._locale = 'fr';
@@ -51,6 +55,21 @@ export class AnneeScolaireDialogComponent implements OnInit{
       debutAS:['',Validators.required],
       finAS:['',Validators.required]
     })
+    console.log(this.data);
+    if (this.data) {
+      if (this.data.btn) {
+        this.btn = this.data.btn;
+      }
+      if (this.data.cancelBtn) {
+        this.cancelBtn = this.data.cancelBtn;
+        this.isDetails = true;
+      }
+
+      this.title = this.data.title;
+      this.ASForm.controls['annee'].setValue(this.data.row.annee);
+      this.ASForm.controls['debutAS'].setValue(moment(this.data.row.debutAS));
+      this.ASForm.controls['finAS'].setValue(moment(this.data.row.finAS));
+    }
   }
   // get f() {
   //   return this.ASForm.controls;
@@ -68,21 +87,32 @@ export class AnneeScolaireDialogComponent implements OnInit{
 
       //TODO : WARNING-- moment date
 
-      AS.debutAS = this.ASForm.value.debutAS.format('YYYY-MM-DD');
-      AS.finAS = this.ASForm.value.finAS.format('YYYY-MM-DD');
-
-      this.ASService.create(AS).subscribe({
-        next: (res) => {
-          console.log(res);
-          this.ASForm.reset();
-          this.dialogRef.close('save');
-          // this.router.navigateByUrl('annee-scolaires/list');
-        },
-        error: () => {
-          alert("Un erreur s'est produit lors de l'ajout de cette année scolaire");
-        }
-      })
+      AS.debutAS = this.ASForm.value.debutAS.format('YYYY/MM/DD');
+      AS.finAS = this.ASForm.value.finAS.format('YYYY/MM/DD');
       
+      if (!this.data) {
+        this.ASService.create(AS).subscribe({
+          next: (res) => {
+            console.log(res);
+            this.ASForm.reset();
+            this.dialogRef.close('save');
+          },
+          error: () => {
+            alert("Une erreur s'est produite lors de l'ajout de cette année scolaire");
+          }
+        })
+      } else {
+        this.ASService.update(Number(this.data.row.id), AS).subscribe({
+          next: (res) => {
+            console.log(res);
+            this.ASForm.reset();
+            this.dialogRef.close('update');
+          },
+          error: () => {
+            alert("Une erreur s'est produite lors de la modification de cette année scolaire");            
+          }
+        })
+      }
     } else {
       console.log('invalid information')
     }

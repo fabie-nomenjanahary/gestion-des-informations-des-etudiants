@@ -49,12 +49,21 @@ class NiveauController extends Controller
     {
         $data['libelle'] = $request['libelle'];
 
-        Niveau::find($id)->update($data);
+        $validator = Validator::make($data, Niveau::updateRules($id), Niveau::$messages);
 
-        return response()->json([
-            'message' => 'Niveau modifié avec succès',
-            'success' => true
-        ], 200);
+        if ($validator->fails()) {
+            return response()->json(
+                ['error' => $validator->errors()]
+            );
+        } else {
+
+            Niveau::find($id)->update($data);
+
+            return response()->json([
+                'message' => 'Niveau modifié avec succès',
+                'success' => true
+            ], 200);
+        }
     }
 
     public function delete($id)

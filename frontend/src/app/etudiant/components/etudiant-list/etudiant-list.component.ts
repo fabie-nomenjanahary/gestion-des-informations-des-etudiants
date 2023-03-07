@@ -79,17 +79,20 @@ export class EtudiantListComponent implements OnInit{
   openDialog() {
     this.etudiantDialog.open(EtudiantDialogComponent, {
       width:'40%',
+    }).afterClosed().subscribe(val => {
+      if (val==='save') {
+        this.getEtudiants();
+      }
     })
   }
   openDetailsDialog(row:any) {
    this.etudiantDialog.open(EtudiantDialogComponent, {
      width: '40%',
      data: {
-       btn: 'Ok',
+       cancelBtn: 'Fermer',
        title:'Details de l\'étudiant',
        row
      },
-     
    })
   }
   openEditDialog(row:any) {
@@ -101,15 +104,23 @@ export class EtudiantListComponent implements OnInit{
        row
      },
      
-   })
+   }).afterClosed().subscribe(val => {
+      if (val==='update') {
+        this.getEtudiants();
+      }
+    })
   }
   openDeleteDialog(id:string) {
-    if (confirm('Vous voulez vraiment le supprimer?')) {
-      this.deleteEtudiant(Number(id));
+    if (confirm('Vous voulez vraiment supprimer cet étudiant?')) {
+      this.etudiantService.delete(Number(id)).subscribe({
+        next: (res) => {
+          console.log(res);
+          this.getEtudiants();
+        },
+        error: () => {
+          alert("Une erreur s'est produite lors de la suppression de cet étudiant");
+        }
+      })
     }
-  }
-  deleteEtudiant(id: number) {
-    console.log('deleting....')
-    //TODO
   }
 }

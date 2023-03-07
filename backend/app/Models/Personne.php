@@ -33,6 +33,14 @@ class Personne extends Model
         ];
     }
 
+    public static function updateRules($id)
+    {
+        return [
+            'tel' => 'required|unique:personnes,tel,' . $id,
+            'mail' => 'required|unique:personnes,mail,' . $id,
+        ];
+    }
+
     public static $messages = [
         'tel.required' => 'Veuillez saisir le numéro de téléphone s\'il vous plait',
         'tel.unique' => 'Ce numéro de téléphone existe déjà',

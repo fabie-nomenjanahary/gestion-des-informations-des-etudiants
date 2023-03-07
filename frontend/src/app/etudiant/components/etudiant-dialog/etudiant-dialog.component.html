@@ -81,6 +81,6 @@
     </form>
 </div>
 <div mat-dialog-actions align="center">
-    <button mat-raised-button color="primary" cdkFocusInitial (click)="addEtudiant()" class="ok">{{btn}}</button>
-    <button mat-raised-button color="warn" mat-dialog-close>Annuler</button>
+    <button mat-raised-button color="primary" cdkFocusInitial (click)="addEtudiant()" *ngIf="!isDetails">{{btn}}</button>
+    <button mat-raised-button color="warn" mat-dialog-close>{{cancelBtn}}</button>
 </div>
