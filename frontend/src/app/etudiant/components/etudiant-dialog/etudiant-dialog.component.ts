@@ -175,4 +175,8 @@ getNiveaux() {
         console.log('Invalid information');
       }
   }
+  plusNiveau() {
+    // TODO
+    let table = document.getElementById('niveau-as') as HTMLTableElement;
+  }
 }

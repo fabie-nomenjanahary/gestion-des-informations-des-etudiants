@@ -40,24 +40,35 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label>Niveau</mat-label>
-            <mat-icon matPrefix>show_chart</mat-icon>
-            <mat-select formControlName="idNiveau" name="idNiveau">
-                <mat-option *ngFor="let niveau of niveaux" [value]="niveau.id">
-                    {{niveau.libelle}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label>Année scolaire</mat-label>
-            <mat-icon matPrefix>date_range</mat-icon>
-            <mat-select formControlName="idAS" name="idAS">
-                <mat-option *ngFor="let AS of anneeScolaires" [value]="AS.id">
-                    {{AS.annee}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
+        <table cellSpacing="0" id="niveau-as">
+            <tr id="tr-init">
+                <td style="width: 200px;">
+                    <mat-form-field appearance="outline" style="width: 200px;">
+                        <mat-label>Niveau</mat-label>
+                        <mat-icon matPrefix>show_chart</mat-icon>
+                        <mat-select formControlName="idNiveau" name="idNiveau">
+                            <mat-option *ngFor="let niveau of niveaux" [value]="niveau.id">
+                                {{niveau.libelle}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </td>
+                <td style="width: 200px;">
+                    <mat-form-field appearance="outline" style="width: 200px;">
+                        <mat-label>Année scolaire</mat-label>
+                        <mat-icon matPrefix>date_range</mat-icon>
+                        <mat-select formControlName="idAS" name="idAS">
+                            <mat-option *ngFor="let AS of anneeScolaires" [value]="AS.id">
+                                {{AS.annee}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </td>
+                <button id="plusBtn" (click)="plusNiveau()" mat-icon-button class="example-icon" aria-label="" color="primary" matTooltip="Ajouter un autre niveau">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </tr>
+        </table>
         <mat-form-field appearance="outline">
             <mat-label>Adresse</mat-label>
             <input formControlName="adresse" matInput placeholder="Ex:Fianarantsoa Lot.15UY-510">
@@ -65,8 +76,9 @@
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>N° Téléphone</mat-label>
-            <input formControlName="tel" matInput placeholder="Ex:0340152624">
+            <input formControlName="tel" matInput #tel placeholder="Ex:0340152624" maxlength="10">
             <mat-icon matPrefix>phone</mat-icon>
+            <mat-hint align="end">{{tel.value.length}}/10</mat-hint>
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Adresse e-mail</mat-label>
