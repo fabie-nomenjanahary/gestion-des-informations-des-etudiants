@@ -4,6 +4,5 @@ export class Etudiant {
     observation: string;
     personne_id: number;
     parcour_id: number;
-    niveau_id: number;
-    AS_id: number;
+    niveaux_annees: { niveau_id: number, AS_id: number }[]=[];
 }
