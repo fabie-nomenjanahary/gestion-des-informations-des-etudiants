@@ -20,7 +20,7 @@ export class ParcourDialogComponent implements OnInit{
   constructor(private fb: FormBuilder, private parcourService: ParcourService, private router: Router,
     @Inject(MAT_DIALOG_DATA) public data:any,
     private dialogRef: MatDialogRef<ParcourDialogComponent>) { }
-  
+
   ngOnInit(): void {
     this.parcourForm = this.fb.group({
       libelle:['',Validators.required]
@@ -34,12 +34,17 @@ export class ParcourDialogComponent implements OnInit{
         this.cancelBtn = this.data.cancelBtn;
         this.isDetails = true;
       }
-
+      if (this.isDetails) {
+        this.parcourForm.disable();
+        Object.values(this.parcourForm.controls).forEach(control => {
+          control.setValidators(null);
+        });
+      }
       this.title = this.data.title;
       this.parcourForm.controls['libelle'].setValue(this.data.row.libelle);
     }
   }
-  
+
   addParcour() {
     console.log(this.parcourForm.value);
     if (this.parcourForm.valid) {
@@ -64,7 +69,7 @@ export class ParcourDialogComponent implements OnInit{
             this.dialogRef.close('update');
           },
           error: () => {
-            alert("Une erreur s'est produite lors de la modification de ce parcour");            
+            alert("Une erreur s'est produite lors de la modification de ce parcour");
           }
           })
       }

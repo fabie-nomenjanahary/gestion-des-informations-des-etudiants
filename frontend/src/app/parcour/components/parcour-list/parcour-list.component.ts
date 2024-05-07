@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Parcour } from '../../parcour.model';
 import { ParcourService } from '../../parcour.service';
 import { ParcourDialogComponent } from '../parcour-dialog/parcour-dialog.component';
+import { MatConfirmDialogService } from 'src/app/mat-confirm-dialog/mat-confirm-dialog.service';
 
 @Component({
   selector: 'app-parcour-list',
@@ -20,8 +21,10 @@ export class ParcourListComponent implements OnInit{
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  constructor(private parcourService: ParcourService, private parcourDialog: MatDialog) { }
-  
+  constructor(private parcourService: ParcourService, private parcourDialog: MatDialog,
+    private confirmDialogService : MatConfirmDialogService
+    ) { }
+
   ngOnInit(): void {
     this.getParcours();
   }
@@ -35,7 +38,7 @@ export class ParcourListComponent implements OnInit{
     this.dataSource.sort = this.sort;
     })
   }
-  
+
 
       applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -82,16 +85,19 @@ export class ParcourListComponent implements OnInit{
   }
 
   openDeleteDialog(id: string) {
-    if (confirm('Vous voulez vraiment supprimer ce parcour?')) {
-      this.parcourService.delete(Number(id)).subscribe({
-        next: (res) => {
-          console.log(res);
-          this.getParcours();
-        },
-        error: () => {
-          alert('Une erreur s\'est produite lors de la suppression de ce parcour');
-        }
-      })
+    this.confirmDialogService.openMatConfirmDialog('Vous voulez vraiment supprimer ce parcour?')
+      .afterClosed().subscribe(res => {
+      if (res) {
+        this.parcourService.delete(Number(id)).subscribe({
+          next: (res) => {
+            console.log(res);
+            this.getParcours();
+          },
+          error: () => {
+            alert('Une erreur s\'est produite lors de la suppression de ce parcour');
+          }
+        })
     }
+  });
   }
 }
