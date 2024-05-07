@@ -138,7 +138,7 @@ class EtudiantController extends Controller
         $et->update($etudiant);
         foreach ($request['etudiant.niveaux_annees'] as $key => $niveau_annee) {
             $et->niveaux()->syncWithoutDetaching([$niveau_annee['niveau_id']=>
-                ['AS_id' => $niveau_annee['AS_id']]]//it doeen't take this one into consideration
+                ['AS_id' => $niveau_annee['AS_id']]]
             );
         }
         return response()->json([
