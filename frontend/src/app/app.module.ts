@@ -14,7 +14,7 @@ import { PersonneModule } from './personne/personne.module';
 import { EnseignantModule } from './enseignant/enseignant.module';
 import { MatConfirmDialogComponent } from './mat-confirm-dialog/components/mat-confirm-dialog/mat-confirm-dialog.component';
 import { UniteEnseignementModule } from './unite-enseignement/unite-enseignement.module';
-
+import { MatiereModule } from './matiere/matiere.module';
 @NgModule({
   declarations: [
     AppComponent,NavigationComponent, MatConfirmDialogComponent
@@ -31,7 +31,8 @@ import { UniteEnseignementModule } from './unite-enseignement/unite-enseignement
     ParcourModule,
     PersonneModule,
     EnseignantModule,
-    UniteEnseignementModule
+    UniteEnseignementModule,
+    MatiereModule
   ],
   providers: [],
   bootstrap: [AppComponent]
