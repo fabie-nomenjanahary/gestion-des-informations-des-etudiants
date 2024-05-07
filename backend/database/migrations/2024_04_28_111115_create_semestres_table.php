@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePersonnesTable extends Migration
+class CreateSemestresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class CreatePersonnesTable extends Migration
      */
     public function up()
     {
-        Schema::create('personnes', function (Blueprint $table) {
+        Schema::create('semestres', function (Blueprint $table) {
             $table->id();
-            $table->string('nom');
-            $table->string('prenom')->nullable();
-            $table->string('adresse');
-            $table->date('dateNais');
-            $table->string('lieuNais');
-            $table->string('tel',13)->unique();
+            $table->string('nom')->unique();
+            $table->unsignedBigInteger('niveau_id');
+            $table->foreign('niveau_id')->references('id')->on('niveaux')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -32,6 +29,6 @@ class CreatePersonnesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('personnes');
+        Schema::dropIfExists('semestres');
     }
 }
