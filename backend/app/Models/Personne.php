@@ -24,7 +24,10 @@ class Personne extends Model
     {
         return $this->hasOne('App\Models\Etudiant');
     }
-
+    public function enseignant()
+    {
+        return $this->hasOne('App\Models\Enseignant');
+    }
     public static function rules()
     {
         return [

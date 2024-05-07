@@ -19,7 +19,10 @@ class Niveau extends Model
     {
         return $this->belongsToMany(Etudiant::class, 'etudiant_niveaux');
     }
-
+    public function semestres()
+    {
+        return $this->hasMany(Semestre::class)->orderBy('id','asc');
+    }
     public static function rules()
     {
         return [

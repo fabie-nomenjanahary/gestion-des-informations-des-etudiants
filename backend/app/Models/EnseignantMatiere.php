@@ -5,13 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class EtudiantNiveau extends Pivot
+class EnseignantMatiere extends Pivot
 {
     use HasFactory;
-    protected $table = "etudiant_niveaux";
+    protected $table = "enseignants-matieres";
     public $incrementing = true;
-    public function anneeScolaire()
+
+    public function etudiants()
     {
-        return $this->belongsTo(AnneeScolaire::class);
+        return $this->belongsToMany(Etudiant::class, 'notes');
     }
 }

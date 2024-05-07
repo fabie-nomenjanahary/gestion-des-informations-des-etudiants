@@ -5,41 +5,39 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Parcour extends Model
+class Semestre extends Model
 {
     use HasFactory;
-
-    protected $table = "parcours";
+    protected $table = "semestres";
 
     protected $fillable = [
-        'libelle'
+        'nom',
+        'niveau_id'
     ];
-
-    public function etudiants()
+    public function niveau()
     {
-        return $this->hasMany('App\Models\Etudiant');
+        return $this->belongsTo('App\Models\Niveau');
     }
-
     public function uniteEnseignements()
     {
-        return $this->hasMany('App\Models\UniteEnseignement');
+        return $this->hasMany('App\Models\UniteEnseignement', 'sem_id');
     }
 
     public static function rules()
     {
         return [
-            'libelle' => 'unique:parcours,libelle'
+            'nom' => 'unique:semestres,nom'
         ];
     }
 
     public static function updateRules($id)
     {
         return [
-            'libelle' => 'unique:parcours,libelle,' . $id
+            'nom' => 'unique:semestres,nom,' . $id
         ];
     }
 
     public static $messages = [
-        'libelle.unique' => 'Ce parcour existe déjà'
+        'nom.unique' => 'Ce semestre existe déjà'
     ];
 }

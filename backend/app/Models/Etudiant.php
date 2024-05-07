@@ -32,13 +32,15 @@ class Etudiant extends Model
     public function niveaux()
     {
         return $this->belongsToMany(Niveau::class, 'etudiant_niveaux')
-            ->withPivot([
-                'etudiant_id',
-                'niveau_id',
-                'AS_id'
-            ]);
+            ->withPivot('AS_id')
+            ->withTimestamps();
     }
-
+    public function ensMatieres()
+    {
+        return $this->belongsToMany(EnseignantMatiere::class, 'notes')
+        ->withPivot('valeur','session_id')
+        ->withTimestamps();
+    }
     public static function rules()
     {
         return [
