@@ -7,6 +7,7 @@ import { UniteEnseignementService } from '../../unite-enseignement.service';
 import { MatConfirmDialogService } from 'src/app/mat-confirm-dialog/mat-confirm-dialog.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UniteEnseignementDialogComponent } from '../unite-enseignement-dialog/unite-enseignement-dialog.component';
+import { MatiereDialogComponent } from 'src/app/matiere/components/matiere-dialog/matiere-dialog.component';
 
 @Component({
   selector: 'app-unite-enseignement-list',
@@ -101,19 +102,19 @@ openDeleteDialog(id: string) {
     }
   });
   }
-  openAddMatiereDialog(id: string) {
-    console.log(id);
-    // this.uniteEnseignementDialog.open(MatiereDialogComponent, {
-    //       width: '30%',
-    //       data: {
-    //         btn:'Mettre à jour',
-    //         title: 'Ajouter une ou plusieurs matières à cette unité d\'enseignement',
-    //         niveau_id:id
-    //       }
-    //     }).afterClosed().subscribe(val => {
-    //       if (val==='addMatiere') {
-    //         this.getUniteEnseignements();
-    //       }
-    // })
+  openAddMatiereDialog(row: any) {
+    console.log(row);
+    this.uniteEnseignementDialog.open(MatiereDialogComponent, {
+          width: '30%',
+          data: {
+            btn:'Mettre à jour',
+            title: 'Ajouter une matière à cette unité d\'enseignement',
+            row
+          }
+        }).afterClosed().subscribe(val => {
+          if (val==='addMatiere') {
+            this.getUniteEnseignements();
+          }
+    })
   }
 }
