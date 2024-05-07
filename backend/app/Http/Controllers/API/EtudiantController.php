@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Etudiant;
 use App\Models\Personne;
+use App\Models\EtudiantNiveau;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -13,11 +14,6 @@ class EtudiantController extends Controller
     public function getAll()
     {
         $data = Etudiant::with('personne')->with('parcour')->with('niveaux')->get();
-        //   [
-        //                 'niveaux' => function ($query) {
-        //                     $query->where('', 'like', '%first%');
-        //                 }
-        //             ]
         return response()->json($data, 200);
     }
 
@@ -38,9 +34,7 @@ class EtudiantController extends Controller
             'observation' => $request['etudiant.observation'],
             'parcour_id' => $request['etudiant.parcour_id']
         ];
-        $niveau_id = $request['etudiant.niveau_id'];
-        $AS_id = $request['etudiant.AS_id'];
-
+        $niveaux_annees = $request['etudiant.niveaux_annees'];
         $validator0 = Validator::make($personne, Personne::rules(), Personne::$messages);
 
         if ($validator0->fails()) {
@@ -104,7 +98,9 @@ class EtudiantController extends Controller
         } else {
 
             $et = Etudiant::create($etudiant);
-            $et->niveaux()->attach($niveau_id, ['AS_id' => $AS_id]);
+            foreach ($niveaux_annees as $key => $niveau_annee) {
+                $et->niveaux()->attach(['niveau_id' => $niveau_annee['niveau_id']], ['AS_id' => $niveau_annee['AS_id']]);
+            }
             return response()->json([
                 'message' => "Etudiant ajouté avec succès",
                 'success' => true
@@ -121,15 +117,30 @@ class EtudiantController extends Controller
 
     public function update(Request $request, $id)
     {
-        $data['matricule'] = $request['matricule'];
-        $data['observation'] = $request['observation'];
-        $data['personne_id'] = $request['personne_id'];
-        $data['parcour_id'] = $request['parcour_id'];
-        $data['niveau_id'] = $request['niveau_id'];
-        $data['AS_id'] = $request['AS_id'];
+        $personne = [
+            'nom' => $request['personne.nom'],
+            'prenom' => $request['personne.prenom'],
+            'adresse' => $request['personne.adresse'],
+            'dateNais' => $request['personne.dateNais'],
+            'lieuNais' => $request['personne.lieuNais'],
+            'tel' => $request['personne.tel'],
+            'mail' => $request['personne.mail']
+        ];
 
-        Etudiant::find($id)->update($data);
+        $etudiant = [
+            'matricule' => $request['etudiant.matricule'],
+            'observation' => $request['etudiant.observation'],
+            'parcour_id' => $request['etudiant.parcour_id']
+        ];
 
+        Personne::find($request['etudiant.personne_id'])->update($personne);
+        $et=Etudiant::find($id);
+        $et->update($etudiant);
+        foreach ($request['etudiant.niveaux_annees'] as $key => $niveau_annee) {
+            $et->niveaux()->syncWithoutDetaching([$niveau_annee['niveau_id']=>
+                ['AS_id' => $niveau_annee['AS_id']]]//it doeen't take this one into consideration
+            );
+        }
         return response()->json([
             'message' => 'Etudiant modifié avec succès',
             'success' => true
