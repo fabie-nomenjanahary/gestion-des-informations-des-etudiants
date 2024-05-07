@@ -4,9 +4,27 @@
         <hr>
         <mat-form-field appearance="outline">
             <mat-label>Libellé</mat-label>
-            <input formControlName="libelle" matInput placeholder="Ex:L1">
+            <input formControlName="libelle" matInput placeholder="Ex:L1" minlength="2" maxlength="2">
             <mat-icon matPrefix>class</mat-icon>
         </mat-form-field>
+          <div formGroupName="semestres">
+            <mat-form-field hidden>
+              <input formControlName="sem_1id" matInput>
+          </mat-form-field>
+              <mat-form-field appearance="outline">
+                  <mat-label>Nom du 1er semestre</mat-label>
+                  <mat-icon matPrefix>date_range</mat-icon>
+                  <input formControlName="sem_1" matInput placeholder="Ex:S1" minlength="2" maxlength="2">
+              </mat-form-field>
+              <mat-form-field hidden>
+                <input formControlName="sem_2id" matInput>
+            </mat-form-field>
+              <mat-form-field appearance="outline">
+                  <mat-label>Nom du 2ème semestre</mat-label>
+                  <mat-icon matPrefix>date_range</mat-icon>
+                  <input formControlName="sem_2" matInput placeholder="Ex:S2" minlength="2" maxlength="3">
+              </mat-form-field>
+          </div>
     </form>
 </div>
 <div mat-dialog-actions align="center">

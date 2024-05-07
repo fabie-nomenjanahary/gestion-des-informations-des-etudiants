@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Niveau } from '../../niveau.model';
 import { NiveauService } from '../../niveau.service';
 import { NiveauDialogComponent } from '../niveau-dialog/niveau-dialog.component';
+import { MatConfirmDialogService } from 'src/app/mat-confirm-dialog/mat-confirm-dialog.service';
 
 @Component({
   selector: 'app-niveau-list',
@@ -13,14 +14,18 @@ import { NiveauDialogComponent } from '../niveau-dialog/niveau-dialog.component'
   styleUrls: ['./niveau-list.component.css']
 })
 export class NiveauListComponent implements OnInit{
-  displayedColumns: string[] = ['libelle','nombre','actions'];
+  displayedColumns: string[] = ['libelle','semestres','actions'];
   dataSource: MatTableDataSource<Niveau>;
   niveaux: Niveau[];
 
-    @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  constructor(private niveauService: NiveauService, private niveauDialog: MatDialog) { }
-  
+  constructor(
+    private niveauService: NiveauService,
+    private confirmDialogService : MatConfirmDialogService,
+    private niveauDialog: MatDialog
+    ) { }
+
   ngOnInit(): void {
     this.getNiveaux();
   }
@@ -28,13 +33,14 @@ export class NiveauListComponent implements OnInit{
     this.niveauService.getAll().subscribe((data: Niveau[]) => {
     this.niveaux = data;
     console.log(this.niveaux);
+
     this.dataSource = new MatTableDataSource(this.niveaux);
     this.paginator._intl.itemsPerPageLabel = "Eléments par page";
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     })
   }
-  
+
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -79,18 +85,20 @@ export class NiveauListComponent implements OnInit{
       }
     })
   }
-
   openDeleteDialog(id: string) {
-    if (confirm('Vous voulez vraiment supprimer ce niveau?')) {
-      this.niveauService.delete(Number(id)).subscribe({
-        next: (res) => {
-          console.log(res);
-          this.getNiveaux();
-        },
-        error: () => {
-          alert('Une erreur s\'est produite lors de la suppression de ce niveau');
-        }
+    this.confirmDialogService.openMatConfirmDialog('Vous voulez vraiment supprimer ce niveau?')
+      .afterClosed().subscribe(res => {
+        if (res) {
+          this.niveauService.delete(Number(id)).subscribe({
+            next: (res) => {
+              console.log(res);
+              this.getNiveaux();
+            },
+            error: () => {
+              alert('Une erreur s\'est produite lors de la suppression de ce niveau');
+            }
       })
     }
+  });
   }
 }

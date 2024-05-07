@@ -2,10 +2,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Niveau } from './niveau.model';
+import { Semestre } from './semestre.model';
 
 const niveauURL = 'http://localhost:8000/api/niveaux/';
-
-
+const semestreURL = 'http://localhost:8000/api/niveaux/semestres/';
 @Injectable({
   providedIn: 'root'
 })
@@ -18,7 +18,7 @@ export class NiveauService {
   }
 
   constructor(private http: HttpClient) { }
-  
+
   errorHandler(error: any) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
@@ -28,9 +28,15 @@ export class NiveauService {
     }
     return throwError(errorMessage);
   }
-  
+
   getAll(): Observable<Niveau[]>{
     return this.http.get<Niveau[]>(niveauURL)
+      .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+  getAllSemestres(): Observable<Semestre[]>{
+    return this.http.get<Semestre[]>(semestreURL+"liste")
       .pipe(
       catchError(this.errorHandler)
     )
