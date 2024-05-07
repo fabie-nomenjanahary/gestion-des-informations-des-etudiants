@@ -11,10 +11,13 @@ import { EtudiantModule } from './etudiant/etudiant.module';
 import { NiveauModule } from './niveau/niveau.module';
 import { ParcourModule } from './parcour/parcour.module';
 import { PersonneModule } from './personne/personne.module';
+import { EnseignantModule } from './enseignant/enseignant.module';
+import { MatConfirmDialogComponent } from './mat-confirm-dialog/components/mat-confirm-dialog/mat-confirm-dialog.component';
+import { UniteEnseignementModule } from './unite-enseignement/unite-enseignement.module';
 
 @NgModule({
   declarations: [
-    AppComponent,NavigationComponent
+    AppComponent,NavigationComponent, MatConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +29,9 @@ import { PersonneModule } from './personne/personne.module';
     EtudiantModule,
     NiveauModule,
     ParcourModule,
-    PersonneModule
+    PersonneModule,
+    EnseignantModule,
+    UniteEnseignementModule
   ],
   providers: [],
   bootstrap: [AppComponent]

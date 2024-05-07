@@ -1,0 +1,39 @@
+<h1 mat-dialog-title>{{title}}</h1>
+<div mat-dialog-content>
+    <form class="example-form" [formGroup]="uniteEnseignementForm">
+        <hr>
+        <mat-form-field appearance="outline">
+            <mat-label>Nom de l'unité d'enseignement</mat-label>
+            <input formControlName="nom" matInput placeholder="Ex:Communication">
+            <mat-icon matPrefix>person</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Crédit UE</mat-label>
+            <input formControlName="creditUE" matInput type="number">
+            <mat-icon matPrefix>credit</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Parcours</mat-label>
+            <mat-icon matPrefix>class</mat-icon>
+            <mat-select formControlName="parcour_id" name="parcour_id">
+                <mat-option *ngFor="let parcour of parcours" [value]="parcour.id">
+                    {{parcour.libelle}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Semestre</mat-label>
+          <mat-icon matPrefix>class</mat-icon>
+          <mat-select formControlName="sem_id" name="sem_id">
+              <mat-option *ngFor="let semestre of semestres" [value]="semestre.id">
+                  {{semestre.nom}} ({{semestre.niveau.libelle}})
+              </mat-option>
+          </mat-select>
+      </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions align="center">
+    <button mat-raised-button color="primary" cdkFocusInitial (click)="addUniteEnseignement()" *ngIf="!isDetails">{{btn}}</button>
+    <button mat-raised-button color="warn" mat-dialog-close>{{cancelBtn}}</button>
+</div>
