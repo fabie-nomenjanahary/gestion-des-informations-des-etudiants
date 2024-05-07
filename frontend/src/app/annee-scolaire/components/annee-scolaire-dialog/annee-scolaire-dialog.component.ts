@@ -34,7 +34,7 @@ import { AnneeScolaireService } from '../../annee-scolaire.service';
   ],
 })
 export class AnneeScolaireDialogComponent implements OnInit{
-  
+
   ASForm: FormGroup;
   btn: string = 'Enrengistrer';
   cancelBtn: string = 'Annuler';
@@ -64,7 +64,12 @@ export class AnneeScolaireDialogComponent implements OnInit{
         this.cancelBtn = this.data.cancelBtn;
         this.isDetails = true;
       }
-
+      if (this.isDetails) {
+        this.ASForm.disable();
+        Object.values(this.ASForm.controls).forEach(control => {
+          control.setValidators(null);
+        });
+      }
       this.title = this.data.title;
       this.ASForm.controls['annee'].setValue(this.data.row.annee);
       this.ASForm.controls['debutAS'].setValue(moment(this.data.row.debutAS));
@@ -74,7 +79,7 @@ export class AnneeScolaireDialogComponent implements OnInit{
   // get f() {
   //   return this.ASForm.controls;
   // }
-  //, Validators.pattern('^[a-zA-ZÁáÀàÉéÈèÍíÌìÓóÒòÚúÙùÑñüÜ \-\']+'),, Validators.email,Validators.pattern("^[0-9]*$") 
+  //, Validators.pattern('^[a-zA-ZÁáÀàÉéÈèÍíÌìÓóÒòÚúÙùÑñüÜ \-\']+'),, Validators.email,Validators.pattern("^[0-9]*$")
   addAnneeScolaire() {
     console.log(this.ASForm.value)
     if (this.ASForm.valid) {
@@ -89,7 +94,7 @@ export class AnneeScolaireDialogComponent implements OnInit{
 
       AS.debutAS = this.ASForm.value.debutAS.format('YYYY/MM/DD');
       AS.finAS = this.ASForm.value.finAS.format('YYYY/MM/DD');
-      
+
       if (!this.data) {
         this.ASService.create(AS).subscribe({
           next: (res) => {
@@ -109,7 +114,7 @@ export class AnneeScolaireDialogComponent implements OnInit{
             this.dialogRef.close('update');
           },
           error: () => {
-            alert("Une erreur s'est produite lors de la modification de cette année scolaire");            
+            alert("Une erreur s'est produite lors de la modification de cette année scolaire");
           }
         })
       }
@@ -117,5 +122,5 @@ export class AnneeScolaireDialogComponent implements OnInit{
       console.log('invalid information')
     }
   }
-  
+
 }

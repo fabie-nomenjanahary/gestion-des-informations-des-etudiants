@@ -6,7 +6,7 @@ import { AnneeScolaireDialogComponent } from '../annee-scolaire-dialog/annee-sco
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-
+import { MatConfirmDialogService } from 'src/app/mat-confirm-dialog/mat-confirm-dialog.service';
 @Component({
   selector: 'app-annee-scolaire-list',
   templateUrl: './annee-scolaire-list.component.html',
@@ -17,14 +17,15 @@ export class AnneeScolaireListComponent implements OnInit{
   dataSource: MatTableDataSource<AnneeScolaire>;
   anneeScolaires: AnneeScolaire[];
 
-  
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private anneeScolaireService: AnneeScolaireService,
     private ASDialog:MatDialog,
+    private confirmDialogService : MatConfirmDialogService
   ) { }
-  
+
   ngOnInit(): void {
     this.getAnneeScolaires();
   }
@@ -39,7 +40,7 @@ export class AnneeScolaireListComponent implements OnInit{
     this.dataSource.sort = this.sort;
     })
   }
-  
+
     applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -86,8 +87,10 @@ export class AnneeScolaireListComponent implements OnInit{
   }
 
   openDeleteDialog(id: string) {
-    if (confirm('Vous voulez vraiment supprimer cette année scolaire?')) {
-      this.anneeScolaireService.delete(Number(id)).subscribe({
+    this.confirmDialogService.openMatConfirmDialog('Vous voulez vraiment supprimer cette année scolaire?')
+    .afterClosed().subscribe(res => {
+      if (res) {
+        this.anneeScolaireService.delete(Number(id)).subscribe({
         next: (res) => {
           console.log(res);
           this.getAnneeScolaires();
@@ -97,5 +100,6 @@ export class AnneeScolaireListComponent implements OnInit{
         }
       })
     }
+  });
   }
 }
