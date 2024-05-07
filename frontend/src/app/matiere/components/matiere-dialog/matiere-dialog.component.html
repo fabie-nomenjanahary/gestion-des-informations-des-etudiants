@@ -1,1 +1,42 @@
-<p>matiere-dialog works!</p>
+<h1 mat-dialog-title>{{title}}</h1>
+<div mat-dialog-content>
+    <form class="example-form" [formGroup]="matiereForm">
+        <h3>{{nomUE}}</h3>
+        <hr>
+        <mat-form-field appearance="outline">
+            <mat-label>Nom de la matière</mat-label>
+            <input formControlName="nom" matInput placeholder="Ex:Algorithme">
+            <mat-icon matPrefix>person</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>ET</mat-label>
+            <input formControlName="ET" matInput type="number">
+            <mat-icon matPrefix>credit</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>ED</mat-label>
+            <input formControlName="ED" matInput type="number">
+            <mat-icon matPrefix>credit</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>EP</mat-label>
+            <input formControlName="EP" matInput type="number">
+            <mat-icon matPrefix>credit</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Crédit EC</mat-label>
+            <input formControlName="creditEC" matInput type="number">
+            <mat-icon matPrefix>credit</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Poids EC</mat-label>
+            <input formControlName="poidsEC" matInput type="number">
+            <mat-icon matPrefix>credit</mat-icon>
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions align="center">
+    <button mat-raised-button color="primary" cdkFocusInitial (click)="addMatiere()" *ngIf="!isDetails">{{btn}}</button>
+    <button mat-raised-button color="warn" mat-dialog-close>{{cancelBtn}}</button>
+</div>
+
