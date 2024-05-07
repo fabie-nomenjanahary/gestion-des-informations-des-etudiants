@@ -1,0 +1,65 @@
+<h1 mat-dialog-title>{{title}}</h1>
+<div mat-dialog-content>
+    <form class="example-form" [formGroup]="enseignantForm">
+        <hr>
+        <mat-form-field appearance="outline">
+            <mat-label>N° Matricule</mat-label>
+            <input formControlName="matricule" matInput placeholder="Ex:2365H-F">
+            <mat-icon matPrefix>format_list_numbered</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Nom</mat-label>
+            <input formControlName="nom" matInput placeholder="Ex:Rabe">
+            <mat-icon matPrefix>person</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Prénom(s)</mat-label>
+            <input formControlName="prenom" matInput placeholder="Ex:Jean Bruno">
+            <mat-icon matPrefix>person_outline</mat-icon>
+        </mat-form-field>
+        <!-- TODO :  Datepicker is a mess -->
+        <mat-form-field appearance="outline">
+            <mat-label>Date de naissance</mat-label>
+            <input formControlName="dateNais" matInput [matDatepicker]="dp">
+            <mat-hint *ngIf="!isDetails">JJ/MM/AAAA</mat-hint>
+            <mat-datepicker-toggle matIconPrefix [for]="dp"></mat-datepicker-toggle>
+            <mat-datepicker #dp></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Lieu de naissance</mat-label>
+            <input formControlName="lieuNais" matInput placeholder="Ex:Fianarantsoa">
+            <!-- TODO : another location icon -->
+            <mat-icon matPrefix>location_on</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Adresse</mat-label>
+            <input formControlName="adresse" matInput placeholder="Ex:Fianarantsoa Lot.15UY-510">
+            <mat-icon matPrefix>location_on</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>N° Téléphone</mat-label>
+            <input formControlName="tel" matInput #tel placeholder="Ex:0340152624" maxlength="10">
+            <mat-icon matPrefix>phone</mat-icon>
+            <mat-hint *ngIf="!isDetails" align="end">{{tel.value.length}}/10</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Adresse e-mail</mat-label>
+            <input formControlName="mail" type="email" matInput placeholder="Ex:exemple@gmail.com">
+            <mat-icon matPrefix>mail</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Grade</mat-label>
+          <input formControlName="grade" matInput placeholder="...">
+          <mat-icon matPrefix>grade</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Titre</mat-label>
+          <input formControlName="titre" matInput placeholder="...">
+          <mat-icon matPrefix>title</mat-icon>
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions align="center">
+    <button mat-raised-button color="primary" cdkFocusInitial (click)="addEnseignant()" *ngIf="!isDetails">{{btn}}</button>
+    <button mat-raised-button color="warn" mat-dialog-close>{{cancelBtn}}</button>
+</div>
