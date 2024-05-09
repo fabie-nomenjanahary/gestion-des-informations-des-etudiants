@@ -9,6 +9,7 @@ use App\Http\Controllers\API\PersonneController;
 use App\Http\Controllers\API\NoteController;
 use App\Http\Controllers\API\UniteEnseignementController;
 use App\Http\Controllers\API\SemestreController;
+use App\Http\Controllers\API\MatiereController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -57,6 +58,14 @@ Route::prefix('unite-enseignements')->group(function () {
     Route::post('/', [UniteEnseignementController::class, 'create']);
     Route::put('/{id}', [UniteEnseignementController::class, 'update']);
     Route::delete('/{id}', [UniteEnseignementController::class, 'delete']);
+});
+
+Route::prefix('matieres')->group(function () {
+    Route::get('/', [MatiereController::class, 'getAll']);
+    Route::get('/{id}', [MatiereController::class, 'get']);
+    Route::post('/', [MatiereController::class, 'create']);
+    Route::put('/{id}', [MatiereController::class, 'update']);
+    Route::delete('/{id}', [MatiereController::class, 'delete']);
 });
 
 Route::prefix('enseignants')->group(function () {
