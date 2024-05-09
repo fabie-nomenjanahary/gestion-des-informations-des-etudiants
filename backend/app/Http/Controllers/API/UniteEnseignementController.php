@@ -11,7 +11,6 @@ class UniteEnseignementController extends Controller
 {
     public function getAll()
     {
-        //don't take sem_id,UE_id but semestre_id, unite-enseignement_id
         $data = UniteEnseignement::with('parcour')->with('semestre')->with('semestre.niveau')->with('matieres')->get();
 
         return response()->json($data, 200);
