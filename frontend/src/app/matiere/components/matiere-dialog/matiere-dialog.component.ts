@@ -58,7 +58,7 @@ export class MatiereDialogComponent {
      }
   }
   createForm() {
-this.matiereForm = this.fb.group(
+    this.matiereForm = this.fb.group(
       {
         nom:['',Validators.required],
         ET:['',Validators.required],
@@ -91,9 +91,9 @@ this.matiereForm = this.fb.group(
         matiere.EP = Number(this.matiereForm.value.EP);
         matiere.creditEC = Number(this.matiereForm.value.creditEC);
         matiere.poidsEC = Number(this.matiereForm.value.poidsEC);
-
         if (!this.data) {
           // TODO : show error/success message(s)
+          matiere.UE_id = Number(this.matiereForm.value.UE_id);
           // this.matiereService.create(matiere).subscribe({
           //   next: (res) => {
           //     this.matiereForm.reset();
@@ -107,16 +107,18 @@ this.matiereForm = this.fb.group(
           // })
         } else {
           // TODO : show error/success message(s)
-          console.log(this.data.row);
-          // this.matiereService.update(Number(this.data.row.id),matiere).subscribe({
-          //   next: (res) => {
-          //     this.matiereForm.reset();
-          //     this.dialogRef.close('update');
-          //   },
-          //   error: () => {
-          //     alert("Une erreur s'est produite lors de la modification de cette unité d'enseignement");
-          //   }
-          // })
+          matiere.UE_id = Number(this.data.row.id);
+          this.matiereService.create(matiere).subscribe({
+            next: (res) => {
+              console.log(res['message']);
+
+              this.matiereForm.reset();
+              this.dialogRef.close('save');
+            },
+            error: () => {
+              alert("Une erreur s'est produite lors de l'ajout de matière à cette unité d'enseignement");
+            }
+          })
         }
       } else {
         console.log('Invalid information');
