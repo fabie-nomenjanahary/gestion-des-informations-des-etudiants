@@ -103,7 +103,6 @@ openDeleteDialog(id: string) {
   });
   }
   openAddMatiereDialog(row: any) {
-    console.log(row);
     this.uniteEnseignementDialog.open(MatiereDialogComponent, {
           width: '30%',
           data: {
@@ -112,7 +111,7 @@ openDeleteDialog(id: string) {
             row
           }
         }).afterClosed().subscribe(val => {
-          if (val==='addMatiere') {
+          if (val==='save') {
             this.getUniteEnseignements();
           }
     })
