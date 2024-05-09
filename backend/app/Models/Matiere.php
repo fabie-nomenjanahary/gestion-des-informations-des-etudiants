@@ -27,4 +27,22 @@ class Matiere extends Model
     {
         return $this->belongsToMany(Enseignant::class, 'enseignants-matieres');
     }
+
+    public static function rules()
+    {
+        return [
+            'nom' => 'unique:matieres,nom'
+        ];
+    }
+
+    public static function updateRules($id)
+    {
+        return [
+            'nom' => 'unique:matieres,nom,' . $id
+        ];
+    }
+
+    public static $messages = [
+        'nom.unique' => 'Cette matière existe déjà'
+    ];
 }
