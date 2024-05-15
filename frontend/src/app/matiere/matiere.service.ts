@@ -32,6 +32,12 @@ export class MatiereService {
       catchError(this.errorHandler)
     )
   }
+  getAllWhereUE(UE_id: number): Observable<Matiere[]>{
+    return this.http.get<Matiere[]>(matiereURL + 'UE/'+UE_id)
+      .pipe(
+      catchError(this.errorHandler)
+    )
+  }
 
   find(id: number): Observable<Matiere>{
     return this.http.get<Matiere>(matiereURL + id)

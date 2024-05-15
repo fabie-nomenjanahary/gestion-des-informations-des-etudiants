@@ -4,12 +4,14 @@ import { CustomModule } from '../custom-module/custom-module.module';
 import { MatiereRoutingModule } from './matiere-routing.module';
 import { MatiereListComponent } from './components/matiere-list/matiere-list.component';
 import { MatiereDialogComponent } from './components/matiere-dialog/matiere-dialog.component';
+import { UEMatiereListComponent } from './components/uematiere-list/uematiere-list.component';
 
 
 @NgModule({
   declarations: [
     MatiereListComponent,
-    MatiereDialogComponent
+    MatiereDialogComponent,
+    UEMatiereListComponent
   ],
   imports: [
     CommonModule,
@@ -18,7 +20,8 @@ import { MatiereDialogComponent } from './components/matiere-dialog/matiere-dial
   ],
   exports: [
     MatiereListComponent,
-    MatiereDialogComponent
+    MatiereDialogComponent,
+    UEMatiereListComponent
   ]
 })
 export class MatiereModule { }

@@ -8,6 +8,7 @@ import { MatConfirmDialogService } from 'src/app/mat-confirm-dialog/mat-confirm-
 import { MatDialog } from '@angular/material/dialog';
 import { UniteEnseignementDialogComponent } from '../unite-enseignement-dialog/unite-enseignement-dialog.component';
 import { MatiereDialogComponent } from 'src/app/matiere/components/matiere-dialog/matiere-dialog.component';
+import { UEMatiereListComponent } from 'src/app/matiere/components/uematiere-list/uematiere-list.component';
 
 @Component({
   selector: 'app-unite-enseignement-list',
@@ -115,5 +116,15 @@ openDeleteDialog(id: string) {
             this.getUniteEnseignements();
           }
     })
+  }
+  openUEMatieresDialog(row: any) {
+    this.uniteEnseignementDialog.open(UEMatiereListComponent, {
+          width: '80%',
+          data: {
+            cancelBtn:'Fermer',
+            title: 'Liste des matières de l\'unité d\'enseignement : ',
+            row
+          }
+        })
   }
 }
