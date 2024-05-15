@@ -25,7 +25,7 @@ class Matiere extends Model
     }
     public function enseignants()
     {
-        return $this->belongsToMany(Enseignant::class, 'enseignants-matieres');
+        return $this->belongsToMany(Enseignant::class, 'enseignants-matieres','ens_id','mat_id');
     }
 
     public static function rules()
