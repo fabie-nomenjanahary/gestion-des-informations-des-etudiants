@@ -63,6 +63,7 @@ Route::prefix('unite-enseignements')->group(function () {
 Route::prefix('matieres')->group(function () {
     Route::get('/', [MatiereController::class, 'getAll']);
     Route::get('/{id}', [MatiereController::class, 'get']);
+    Route::get('/UE/{UE_id}', [MatiereController::class, 'getAllWhereUE']);
     Route::post('/', [MatiereController::class, 'create']);
     Route::put('/{id}', [MatiereController::class, 'update']);
     Route::delete('/{id}', [MatiereController::class, 'delete']);

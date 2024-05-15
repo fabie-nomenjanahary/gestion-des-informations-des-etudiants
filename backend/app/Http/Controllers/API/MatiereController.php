@@ -49,6 +49,12 @@ class MatiereController extends Controller
 
         return response()->json($data, 200);
     }
+    public function getAllWhereUE($UE_id)
+    {
+        $data = Matiere::with('uniteEnseignement')->with('enseignants')->where('UE_id',$UE_id)->get();
+
+        return response()->json($data, 200);
+    }
 
     public function update(Request $request, $id)
     {
