@@ -119,7 +119,7 @@ openDeleteDialog(id: string) {
   }
   openUEMatieresDialog(row: any) {
     this.uniteEnseignementDialog.open(UEMatiereListComponent, {
-          width: '80%',
+          width: '100%',
           data: {
             cancelBtn:'Fermer',
             title: 'Liste des matières de l\'unité d\'enseignement : ',
